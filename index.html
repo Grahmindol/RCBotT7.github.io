@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte Rendu</title>
+    <link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="./css/prism.css">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+</head>
+<body>
+    <header>
+        <h1>Compte Rendu de l'équipe n°7</h1>
+    </header>
+    <main>
+        <section>
+            <h2>I Le Projet :</h2>
+            <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrason. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
+			<p>pour se fair nous disposons de :</p>
+			<ul>
+				<li>
+					<h3>HC-05</h3>
+					<p>Le HC-05 est un module Bluetooth qui peut être utilisé pour établir une communication sans fil entre une arduino et un téléphone. Le HC-05 dispose d'une portée de communication allant jusqu'à 10 mètres et est très facile à utiliser avec une interface série simple.</p>
+					<img src="./images/HC-05.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>HC-SR04</h3>
+					<p>e HC-SR04 est un module de capteur à ultrasons qui peut être utilisé pour mesurer la distance avec un objet. Il utilise des signaux ultrasoniques pour détecter la distance avec une précision et une plage de mesure élevée.</p>
+					<img src="./images/HC-SR04.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>L298n</h3>
+					<p>Le L298N est un double pont en H qui peut être utilisé pour contrôler la vitesse et la direction des moteurs à courant continu.</p>
+					<img src="./images/L298n.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>QTR-3RC</h3>
+					<p>Le QTR-3RC est un capteur de ligne infrarouge qui peut être utilisé pour détecter la présence d'une ligne. Il est composé de trois capteurs infrarouges et dispose d'une interface analogique pour une lecture précise de la position de la ligne.</p>
+					<img src="./images/QTR-3RC.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Arduino UNO Rev3</h3>
+					<p>L'Arduino Uno Rev3 est une carte électronique équipée d'un microcontrôleur. Elle dispose de broches d'entrée/sortie pour communiquer avec différents composants électroniques.</p>
+					<img src="./images/arduino.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+			</ul>
+        </section>
+        <section>
+            <h2>II Les Capteur:</h2>
+            <ul>
+				<li>
+					<h3>capteur à infrarouge</h3>
+					<h4>Experience Réaliser</h4>
+					<ul>
+						<li>
+							<p> nous avons tout d'abord mesuré le capteur afin de s'assurer de ses dimention : </p>
+							<div style="border-radius: 25px;margin-top: 1rem;display: inline-block;">
+								<img src="./images/EX_IR_SIZE_1.png" style="border-radius: 25px;">
+								<img src="./images/EX_IR_SIZE_2.png" style="border-radius: 25px;">
+							<div>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos resultat concorde bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
+						</li>
+						<li>
+							<p> Nous avons mesuré la distance optimale du capteur avec le sol : </p>
+							<img src="./images/EX_IR_HAUTEUR.png" style="border-radius: 25px;margin-top: 1rem;">
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> on obtient ce tableau : </p>
+							<table >
+								<tr>
+									<th> 10 </th>
+									<th> 9 </th>
+									<th> 8 </th>
+									<th> 7 </th>
+									<th> 6 </th>
+									<th> 5 </th>
+									<th> 4 </th>
+									<th> 3 </th>
+								</tr>
+								<tr>
+									<th> 982 </th>
+									<th> 900 </th>
+									<th> 910 </th>
+									<th> 920 </th>
+									<th> 927 </th>
+									<th> 900 </th>
+									<th> 870 </th>
+									<th> 810 </th>
+								</tr>
+							</table>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> Grace a ce tableau, nous pouvons en déduire que la distance optimale entre le capteur et le sol est <b>6mm.</b> </p>
+						</li>
+						<li>
+							<h4>Code utilisé pour les tests</h4>
+							<pre style="border-radius: 10px;"><code class="language-cpp" >
+int const capteurIR= A0; // permet de donner un nom à une entrée,
+ // ce n’est pas obligatoire mais conseillé
+int ValeurIR=0 ; // crée la variable du capteur
+void setup()
+{
+ Serial.begin(9600); // définit la vitesse de la liaison série
+}
+void loop()
+{
+ Serial.print("Valeur du capteur: "); // envoi du texte sur la liaison série
+ ValeurIR = analogRead(capteurIR); //lire l’entrée analogique qui correspond au capteur
+ Serial.println(ValeurIR); // envoi la valeur du capteur sur la liaison série
+ delay(100);// attente de 100ms entre chaque valeur
+ } 
+							</code></pre>
+						</li>
+						<li>
+							<h4>Conclusion des test:</h4>
+							<p>le capteur à les dimension indiqué sur le doc, il devra être installer à 6 mm du sol pour un fonctionement optimal.</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<h3>capteur à ultrasons</h3>
+					<h4>Experience Réaliser</h4>
+					<ul>
+						<li>
+							<h4> nous avons mesuré la distance minimale et maximale de captation : </h4>
+							<div style="border-radius: 25px;margin-top: 1rem;display: inline-block;">
+								<img src="./images/EX_US_DIST_1.png" style="border-radius: 25px;">
+								<img src="./images/EX_US_DIST_2.png" style="border-radius: 25px;">
+							<div>
+							<p>La règle nous permet de trouver la distance minimale de capture : <b>2 cm.</b></p>
+							<p>Le mètre nous permet de trouver la distance maximale de capture : <b>400 cm.</b></p>
+						</li>
+						<li>
+							<h4> nous avons mesuré la distance minimale et maximale de captation : </h4>
+							<div style="border-radius: 25px;margin-top: 1rem;display: inline-block;">
+								<img src="./images/EX_US_ANG_HORIZONTAL.png" style="border-radius: 25px;">
+								<img src="./images/EX_US_ANG_VERTICAL.png" style="border-radius: 25px;">
+							<div>
+							<p>L’angle de détection horizontal est d’environ <b>40 degrés.</b></p>
+							<p>L’angle de détection vertical est d'environ égal à <b>60 degrés.</b></p>
+						</li>
+						<li>
+							<h4>Code utilisé pour les tests</h4>
+							<pre style="border-radius: 10px;"><code class="language-cpp" >
+int const trigPin=5; //Trig
+int const echoPin=4; //Echo
+long duree, distance; // variables pour les calculs
+void setup()
+{
+ Serial.begin (9600);
+ pinMode(trigPin, OUTPUT); //On défini Trig comme une sortie
+ pinMode(echoPin, INPUT); //On défini Echo comme une entrée
+}
+void loop()
+{
+ digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0
+ delayMicroseconds(2); // attente 2ms
+ digitalWrite(trigPin, HIGH); // On met la sortie trigPin à 1
+ delayMicroseconds(10); //Trig envois pendant 10ms
+ digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0
+
+ // On calcul le temps pour l'aller retour du signal
+ duree = pulseIn(echoPin, HIGH);
+ distance = duree*340/(2*10000);
+
+ //Pour le moniteur série
+ Serial.print(distance);
+ Serial.println(" cm ");
+ Serial.print(duree);
+ Serial.println(" ms");
+ delay(100);
+} 
+							</code></pre>
+						</li>
+					</ul>
+				</li>
+			</ul>
+            
+        </section>
+		<section>
+            <h2>III La carte de puissance</h2>
+            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
+            <h3>List of component :</h3>
+            
+        </section>
+		<section>
+            <h2>IV La Radio-commande</h2>
+            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
+            <h3>List of component :</h3>
+            
+        </section>
+		<section>
+            <h2>V la voiture</h2>
+            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
+            <h3>List of component :</h3>
+            
+        </section>
+		<section>
+            <h2>VI conclusion</h2>
+            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
+            <h3>List of component :</h3>
+            
+        </section>
+    </main>
+    <footer>
+        <p>Compte Rendu de l'équipe n°7</p>
+    </footer>
+	<script src="./js/prism.js"></script>
+</body>
+</html>
