@@ -175,26 +175,83 @@ void loop()
         </section>
 		<section>
             <h2>III La carte de puissance</h2>
-            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
-            <h3>List of component :</h3>
-            
+            <p>nous utilisins une carte de puissance pour ...</p>
         </section>
-		<section>
+        <section>
             <h2>IV La Radio-commande</h2>
-            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
-            <h3>List of component :</h3>
-            
+            <h2>Le Bleutooth</h2>
+            <p>Le Bluetooth est une technologie de communication sans fil qui utilise des ondes radio pour transmettre des données et des informations entre les appareils. le Bluetooth peut être utilisé pour contrôler et piloter des appareils à distance, tels que des drones ou des voitures télécommandées.</p>
+            <h3>Le module HC-05</h3>
+            <p>Le module HC-05 est un module Bluetooth qui permet de communiquer avec un autre appareil Bluetooth. Il est possible de le connecter à un Arduino pour contrôler un robot ou un drone à distance.</p>
+
+            <h3>L'Application</h3>
+            <h4>fonctionalité</h4>
+            <ul>
+                <li>connexion au robot</li>
+                <li>controle du robot</li>
+                <li>arret/lancement du mod IR</li>
+            </ul>
+            <h4>code</h4>
+            <p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
+            <pre style="border-radius: 10px;"><code class="language-java">
+//l'extrait qui suit est le code de l'application android qui permet de piloter le robot avec le joystick
+final JoystickView joystickRight = findViewById(R.id.joystickView_right);
+joystickRight.setOnMoveListener((angle, strength) -> {
+	mTextViewAngleRight.setText(angle + "°");
+	mTextViewStrengthRight.setText(strength + "%");
+	int VitesseA = angleToSpeed(angle)*strength/100;
+	int VitesseB = angleToSpeed(angle-90)*strength/100;
+	mTextViewSpeedA.setText("A: "+ VitesseA);
+	mTextViewSpeedB.setText("B: "+ VitesseB);
+	if ( bluetoothClient == null ) return;
+		String msg ="";
+	if(VitesseA >= 0){
+		msg = msg+'0';
+		msg = msg + String.format("%02X", VitesseA);
+	}else{
+		msg = msg+'1';
+		msg = msg + String.format("%02X", VitesseA*-1);
+	}
+	if(VitesseB >= 0){
+		msg = msg+'0';
+		msg = msg + String.format("%02X", VitesseB);
+	}else{
+		msg = msg+'1';
+		msg = msg + String.format("%02X", VitesseB*-1);
+	}
+	msg = msg+';';
+	bluetoothClient.writeString( msg);
+});
+
+private int angleToSpeed(int angle){
+	if(angle < 0){
+		angle+=360;
+	}
+    if(angle<90){ return 255;
+                  }else if(angle < 180){
+        return (angle - 90) * -510 / 90 + 255; //(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min avec x = angle, in_min = 90 , in_max = 180 , out_min = 255 et out_max = -255 => fonction map de arduino.h
+    }else if(angle < 270){
+        return -255;
+    }else{
+		return (angle - 270) * 510 / 90 - 255; //(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min avec x = angle, in_min = 270 , in_max = 360 , out_min = -255 et out_max = 255 => fonction map de arduino.h
+    }
+}
+				</code></pre>
+                <pre style="border-radius: 10px;"><code class="language-java">
+//l'extrait qui suit est le code de l'application android qui permet de d'activé ou désactivé le mode de suivie de ligne
+Button button = (Button) findViewById(R.id.button);
+button.setOnClickListener(v -> {
+	if ( bluetoothClient == null ) return;
+	bluetoothClient.writeString( "200000;200000;200000;");
+});
+			</code></pre>
         </section>
 		<section>
             <h2>V la voiture</h2>
-            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
-            <h3>List of component :</h3>
             
         </section>
 		<section>
             <h2>VI conclusion</h2>
-            <p>This mod adds computers that can be programmed in Lua 5.2 and 5.3.</p>
-            <h3>List of component :</h3>
             
         </section>
     </main>
