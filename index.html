@@ -177,23 +177,83 @@ void loop()
             <h2>III La carte de puissance</h2>
             <p>nous utilisins une carte de puissance pour ...</p>
         </section>
-        <section>
-            <h2>IV La Radio-commande</h2>
-            <h2>Le Bleutooth</h2>
-            <p>Le Bluetooth est une technologie de communication sans fil qui utilise des ondes radio pour transmettre des données et des informations entre les appareils. le Bluetooth peut être utilisé pour contrôler et piloter des appareils à distance, tels que des drones ou des voitures télécommandées.</p>
-            <h3>Le module HC-05</h3>
-            <p>Le module HC-05 est un module Bluetooth qui permet de communiquer avec un autre appareil Bluetooth. Il est possible de le connecter à un Arduino pour contrôler un robot ou un drone à distance.</p>
+		<section>
+			<h2>IV La Radio-commande</h2>
+			<h2>Le Bleutooth</h2>
+			<p>Le Bluetooth est une technologie de communication sans fil qui utilise des ondes radio pour transmettre des données et des informations entre les appareils. le Bluetooth peut être utilisé pour contrôler et piloter des appareils à distance, tels que des drones ou des voitures télécommandées.</p>
+			<h3>Le module HC-05</h3>
+			<p>Le module HC-05 est un module Bluetooth qui permet de communiquer avec un autre appareil Bluetooth. Il est possible de le connecter à un Arduino pour contrôler un robot ou un drone à distance.</p>
+			<h4>cablage</h4>
+			<img src="./images/cablage_hc-05.png" style="border-radius: 25px;margin-top: 1rem;">
+			<h4>code des tests</h4>
+			<pre style="border-radius: 10px;"><code class="language-cpp">
+#include &lt;SoftwareSerial.h&gt;
 
-            <h3>L'Application</h3>
-            <h4>fonctionalité</h4>
-            <ul>
-                <li>connexion au robot</li>
-                <li>controle du robot</li>
-                <li>arret/lancement du mod IR</li>
-            </ul>
-            <h4>code</h4>
-            <p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
-            <pre style="border-radius: 10px;"><code class="language-java">
+SoftwareSerial BTserial(2, 3); // RX | TX
+
+bool IRActive = false;
+
+void setup() {
+  Serial.begin(9600);
+  BTserial.begin(38400);
+
+  randomSeed(analogRead(0));
+}
+
+void loop() {
+  delay(random(100)); // simulation du temp prix par un autre programe ex: lecture de capteur.
+  ecouter();
+}
+
+void ecouter(){
+  bool premierNombreEstNegatif = false;
+  bool secondNombreEstNegatif = false;
+  String representationPremierNombre = "";
+  String representationSecondNombre = "";
+  unsigned long currentMillis = millis();
+  char bt = ' ';
+  while (BTserial.available() <= 14) { // on attend d'etre sur d'avoir au moins un message complet.
+    if((millis() - currentMillis) > 500){ // si on attend plus de 0.5s
+      return; // alors on s'arrete
+    }
+  }
+  while (BTserial.available() > 0) { // tant qu'on a des donné a analiser
+    char c = BTserial.read(); // on les recupere
+    if (c == ';') { // on cherche une fin de transmition
+      bt = BTserial.read();                              // ----------------------------------------------------------------------------------------------------------------------------------
+      representationPremierNombre += (char)BTserial.read();// on lit le message selon la forme X X X X X X ;
+      representationPremierNombre += (char)BTserial.read();//                                  ^  ^  ^  ^  ^
+      secondNombreEstNegatif = BTserial.read() == '1';    //                                  |  |  |  |  |
+      representationSecondNombre += (char)BTserial.read();//                                 (1)(2)(3)(4)(5)
+      representationSecondNombre += (char)BTserial.read();// (1) signe du nb 1 ; (2) valeur absolue de nb 1 ; (3) signe du nb 2 ; (4) valeur absolue de nb 2 ; (5) pour delimité les paket :)
+                                                          // ----------------------------------------------------------------------------------------------------------------------------------
+      if(bt == '2'){
+        IRActive = !IRActive;
+        Serial.println(IRActive ? "IR activé" : "IR desactivé"); // juste pour les log 
+        return;
+      }
+      premierNombreEstNegatif = bt == '1'; 
+      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16); //convertion de representation de nombre hexadecimal en nombre
+      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16); //idem
+      
+      Serial.println("A: " + String(premierNombreEstNegatif ? premierNombre*-1 : premierNombre) + " B: " + String(secondNombreEstNegatif ? secondNombre*-1 : secondNombre)); // juste pour les log 
+      return;
+    }
+  } 
+}
+</code></pre>
+			<h3>L'Application</h3>
+			<p>nous avons réalisé l'app sur Android Studion un environnement de développement intégré (IDE) officiel pour la création d'applications mobiles Android, créé par Google. Il fournit un ensemble d'outils puissants pour les développeurs d'applications Android, tels que des éditeurs de code, des outils de débogage, des émulateurs, des profilers, des outils de test et bien plus encore. </p>
+			<img src="./images/Screenshot_app.png" style="border-radius: 25px;margin-top: 1rem;">
+			<h4>fonctionalité</h4>
+			<ul>
+				<li>connexion au robot</li>
+				<li>controle du robot</li>
+				<li>arret/lancement du mod IR</li>
+			</ul>
+			<h4>code</h4>
+			<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
+			<pre style="border-radius: 10px;"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet de piloter le robot avec le joystick
 final JoystickView joystickRight = findViewById(R.id.joystickView_right);
 joystickRight.setOnMoveListener((angle, strength) -> {
@@ -228,7 +288,7 @@ private int angleToSpeed(int angle){
 		angle+=360;
 	}
     if(angle<90){ return 255;
-                  }else if(angle < 180){
+				  }else if(angle < 180){
         return (angle - 90) * -510 / 90 + 255; //(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min avec x = angle, in_min = 90 , in_max = 180 , out_min = 255 et out_max = -255 => fonction map de arduino.h
     }else if(angle < 270){
         return -255;
@@ -237,15 +297,18 @@ private int angleToSpeed(int angle){
     }
 }
 				</code></pre>
-                <pre style="border-radius: 10px;"><code class="language-java">
+			<pre style="border-radius: 10px;"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet de d'activé ou désactivé le mode de suivie de ligne
 Button button = (Button) findViewById(R.id.button);
 button.setOnClickListener(v -> {
 	if ( bluetoothClient == null ) return;
-	bluetoothClient.writeString( "200000;200000;200000;");
+	bluetoothClient.writeString( "200000;200000;200000;");// on envoie trois fois la meme commande pour etre sur que le robot la recoive
 });
 			</code></pre>
-        </section>
+			<h4>Protocol</h4>
+			<p>ce protocol est constitué de packet conposé de 7 octet, le premier octet indique si un boutton est appuyé ou la direction du moteur A, si le premier octet represente la direction du moteur A alors le deuxieme et troisieme octet represente la vitesse du moteur A au format hexadécimal tandis que le quatrieme indique la direction du moteur B et les cinq et sixieme octet represente la vitesse du moteur B au format hexadécimal. le septieme octet est un octet de fin de packet.</p>
+			<img src="./images/protocol.png" style="border-radius: 25px;margin-top: 1rem;">
+		</section>
 		<section>
             <h2>V la voiture</h2>
             
