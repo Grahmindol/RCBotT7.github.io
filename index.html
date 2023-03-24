@@ -16,7 +16,7 @@
         <section>
             <h2>I Le Projet :</h2>
             <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrason. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
-			<p>pour se fair nous disposons de :</p>
+			<p>pour se faire nous disposons de :</p>
 			<ul>
 				<li>
 					<h3>HC-05</h3>
@@ -25,7 +25,7 @@
 				</li>
 				<li>
 					<h3>HC-SR04</h3>
-					<p>e HC-SR04 est un module de capteur à ultrasons qui peut être utilisé pour mesurer la distance avec un objet. Il utilise des signaux ultrasoniques pour détecter la distance avec une précision et une plage de mesure élevée.</p>
+					<p>Le HC-SR04 est un module de capteur à ultrasons qui peut être utilisé pour mesurer la distance avec un objet. Il utilise des signaux ultrasoniques pour détecter la distance avec une précision et une plage de mesure élevée.</p>
 					<img src="./images/HC-SR04.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
@@ -50,15 +50,34 @@
             <ul>
 				<li>
 					<h3>capteur à infrarouge</h3>
-					<h4>Experience Réaliser</h4>
+					<h4>Entrée/Sortie du capteur</h4>
 					<ul>
 						<li>
-							<p> nous avons tout d'abord mesuré le capteur afin de s'assurer de ses dimention : </p>
+							<b>GND</b> : à brancher à la terre. sert à l'alimentation du capteur.
+						</li>
+						<li>
+							<b>VCC</b> : à brancher au 5V de l'arduino. sert à l'alimentation du capteur. 
+						</li>
+						<li>
+							<b>sortie 1</b> : à brancher au A0 de l'arduino. sortie analogique representant le niveaux d'absorption des infrarouges 0 pour une réflexion totale et 1023 pour une absorption totale. 
+						</li>
+						<li>
+							<b>sortie 2</b> : à brancher au A1 de l'arduino. sortie analogique representant le niveau d'absorption des infrarouges 0 pour une réflexion totale et 1023 pour une absorption totale. 
+						</li>
+						<li>
+							<b>sortie 3</b> : à brancher au A2 de l'arduino. sortie analogique représentant le niveau d'absorption des infrarouges 0 pour une réflexion totale et 1023 pour une absorption totale. 
+						</li>
+					</ul>
+					<img src="./images/cablage_QTR-3RC.png" style="border-radius: 25px;margin-top: 1rem;">
+					<h4>Experiences Réalisées</h4>
+					<ul>
+						<li>
+							<p> Nous avons tout d'abord mesuré le capteur afin de s'assurer de ses dimensions : </p>
 							<div style="border-radius: 25px;margin-top: 1rem;display: inline-block;">
 								<img src="./images/EX_IR_SIZE_1.png" style="border-radius: 25px;">
 								<img src="./images/EX_IR_SIZE_2.png" style="border-radius: 25px;">
 							<div>
-							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos resultat concorde bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos resultats concordent bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
 						</li>
 						<li>
 							<p> Nous avons mesuré la distance optimale du capteur avec le sol : </p>
@@ -86,7 +105,7 @@
 									<th> 810 </th>
 								</tr>
 							</table>
-							<p style="margin-top: 2rem;margin-bottom: 1rem;"> Grace a ce tableau, nous pouvons en déduire que la distance optimale entre le capteur et le sol est <b>6mm.</b> </p>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> Grâce à ce tableau, nous pouvons en déduire que la distance optimale entre le capteur et le sol est <b>6mm.</b> </p>
 						</li>
 						<li>
 							<h4>Code utilisé pour les tests</h4>
@@ -109,13 +128,34 @@ void loop()
 						</li>
 						<li>
 							<h4>Conclusion des test:</h4>
-							<p>le capteur à les dimension indiqué sur le doc, il devra être installer à 6 mm du sol pour un fonctionement optimal.</p>
+							<p>le capteur a les dimensions indiquées sur le doc <b>32 mm × 8 mm × 3 mm</b>, il devra être installé à  <b>6 mm</b> du sol pour un fonctionnement optimal.</p>
+							
+						</li>
+						<li>
+							<h4>Influence:</h4>
+							<img src="./images/algoIR.png" style="border-radius: 25px;">
 						</li>
 					</ul>
 				</li>
 				<li>
 					<h3>capteur à ultrasons</h3>
-					<h4>Experience Réaliser</h4>
+					<h4>Entrée/Sortie du capteur</h4>
+					<ul>
+						<li>
+							<b>GND</b> : à brancher à la terre. sert à l'alimentation du capteur.
+						</li>
+						<li>
+							<b>VCC</b> : à brancher au 5V de l'arduino. sert à l'alimentation du capteur. 
+						</li>
+						<li>
+							<b>Trig</b> : à brancher au 5 de l'arduino. entrée digitale, émission de salve ultra-sonor par le capteur lorsque l'état du pin est haut (5V)
+						</li>
+						<li>
+							<b>Echo</b> : à brancher au 4 de l'arduino. sortie digitale, émet un signal électrique quand une salve est reçue.
+						</li>
+					</ul>
+					<img src="./images/cablage_hc-sr04.png" style="border-radius: 25px;margin-top: 1rem;">
+					<h4>Experiences Réalisées</h4>
 					<ul>
 						<li>
 							<h4> nous avons mesuré la distance minimale et maximale de captation : </h4>
@@ -168,6 +208,16 @@ void loop()
 } 
 							</code></pre>
 						</li>
+						<li>
+							<h4>Conclusion des test:</h4>
+							<p>le capteur à les dimension indiqué sur le doc <b>45 mm × 20 mm × 15 mm</b>, il devra être installé à  <b>la verticale</b> pour un fonctionement optimal.</p>
+							<p>il peut capter des obstacle situé entre <b>2 cm</b> et <b>4 m</b> sur une plage de <b>40°</b> horizontal et <b>60°</b> vertical.
+							
+						</li>
+						<li>
+							<h4>Influence:</h4>
+							<img src="./images/algoUS.png" style="border-radius: 25px;">
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -175,7 +225,7 @@ void loop()
         </section>
 		<section>
             <h2>III La carte de puissance</h2>
-            <p>nous utilisins une carte de puissance pour ...</p>
+            <p>nous utilisons une carte de puissance pour ...</p>
         </section>
 		<section>
 			<h2>IV La Radio-commande</h2>
@@ -245,11 +295,11 @@ void ecouter(){
 			<h3>L'Application</h3>
 			<p>nous avons réalisé l'app sur Android Studion un environnement de développement intégré (IDE) officiel pour la création d'applications mobiles Android, créé par Google. Il fournit un ensemble d'outils puissants pour les développeurs d'applications Android, tels que des éditeurs de code, des outils de débogage, des émulateurs, des profilers, des outils de test et bien plus encore. </p>
 			<img src="./images/Screenshot_app.png" style="border-radius: 25px;margin-top: 1rem;">
-			<h4>fonctionalité</h4>
+			<h4>fonctionnalité</h4>
 			<ul>
 				<li>connexion au robot</li>
-				<li>controle du robot</li>
-				<li>arret/lancement du mod IR</li>
+				<li>contrôle du robot</li>
+				<li>arrêt/lancement du mode IR</li>
 			</ul>
 			<h4>code</h4>
 			<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
@@ -298,28 +348,28 @@ private int angleToSpeed(int angle){
 }
 				</code></pre>
 			<pre style="border-radius: 10px;"><code class="language-java">
-//l'extrait qui suit est le code de l'application android qui permet de d'activé ou désactivé le mode de suivie de ligne
+//l'extrait qui suit est le code de l'application android qui permet d'activer ou désactiver le mode de suivie de ligne
 Button button = (Button) findViewById(R.id.button);
 button.setOnClickListener(v -> {
 	if ( bluetoothClient == null ) return;
-	bluetoothClient.writeString( "200000;200000;200000;");// on envoie trois fois la meme commande pour etre sur que le robot la recoive
+	bluetoothClient.writeString( "200000;200000;200000;");// on envoie trois fois la même commande pour être sur que le robot la recoive
 });
 			</code></pre>
-			<h4>Protocol</h4>
-			<p>ce protocol est constitué de packet conposé de 7 octet, le premier octet indique si un boutton est appuyé ou la direction du moteur A, si le premier octet represente la direction du moteur A alors le deuxieme et troisieme octet represente la vitesse du moteur A au format hexadécimal tandis que le quatrieme indique la direction du moteur B et les cinq et sixieme octet represente la vitesse du moteur B au format hexadécimal. le septieme octet est un octet de fin de packet.</p>
+			<h4>Protocole</h4>
+			<p>ce protocole est constitué de packet conposé de 7 octets, le premier octet indique si un bouton est appuyé ou la direction du moteur A, si le premier octet représente la direction du moteur A alors le deuxième et troisième octet représentent la vitesse du moteur A au format hexadécimal tandis que le quatrième indique la direction du moteur B et les cinq et sixième octet représentent la vitesse du moteur B au format hexadécimal. le septième octet est un octet de fin de packet.</p>
 			<img src="./images/protocol.png" style="border-radius: 25px;margin-top: 1rem;">
 		</section>
 		<section>
-            <h2>V la voiture</h2>
+            <h2>V La voiture</h2>
             
         </section>
 		<section>
-            <h2>VI conclusion</h2>
+            <h2>VI Conclusion</h2>
             
         </section>
     </main>
     <footer>
-        <p>Compte Rendu de l'équipe n°7</p>
+        <p>Compte-rendu de l'équipe n°7</p>
     </footer>
 	<script src="./js/prism.js"></script>
 </body>
