@@ -2,12 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\css",
-    "\\images",
-    "\\js",
-    "\\page",
-    "\\page\\DraconicEvolution",
-    "\\page\\OpenSecurity"
+    "\\js"
   ],
-  "SelectedNode": "\\page\\DraconicEvolution\\storage.html",
+  "SelectedNode": "\\js\\prism.js",
   "PreviewInSolutionExplorer": false
 }
