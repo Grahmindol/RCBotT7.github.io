@@ -228,33 +228,33 @@ void loop()
         <section>
             <h2>III La carte de puissance</h2>
 			<p>Le driver moteur L298N est une carte d’extension compatible à votre Arduino et qui permet aussi bien de piloter deux moteurs à courant continu que de les alimenter électriquement.</p>
-            <ul>
+			<ul>
 				<li>
 					<h3>Entrée/Sortie de la carte</h3>
-                    <ul>
-                        <li>
-                            <ul>
-                                <li>
-                                    ENA: Entrée analogique, permet de régler la vitesse du moteur A.
-                                </li>
-                                <li>
-                                    ENB: Entrée analogique, permet de régler la vitesse du moteur B.
-                                </li>
-                                <li>
-                                    IN1: Entrée digitale, permet de régler la direction du moteur A.
-                                </li>
-                                <li>
-                                    IN2: Entrée digitale, permet de régler la direction du moteur A.
-                                </li>
-                                <li>
-                                    IN3: Entrée digitale, permet de régler la direction du moteur B.
-                                </li>
-                                <li>
-                                    IN4: Entrée digitale, permet de régler la direction du moteur B.
-                                </li>
+					<ul>
+						<li>
+							<ul>
+								<li>
+									ENA: Entrée analogique, permet de régler la vitesse du moteur A.
+								</li>
+								<li>
+									ENB: Entrée analogique, permet de régler la vitesse du moteur B.
+								</li>
+								<li>
+									IN1: Entrée digitale, permet de régler la direction du moteur A.
+								</li>
+								<li>
+									IN2: Entrée digitale, permet de régler la direction du moteur A.
+								</li>
+								<li>
+									IN3: Entrée digitale, permet de régler la direction du moteur B.
+								</li>
+								<li>
+									IN4: Entrée digitale, permet de régler la direction du moteur B.
+								</li>
 
-                            </ul>
-                        </li>
+							</ul>
+						</li>
 						<li>
 							<h4>Le <abbr title="Modulation de Largeur d'Impulsion"> MLI </abbr></h4>
 							<p>Le MLI (Modulation de Largeur d'Impulsion) est une technique pour réguler la tension ou le courant fourni à une charge électrique en modulant la largeur des impulsions d'un signal de commande en fonction d'une tension de référence.</p>
@@ -613,6 +613,33 @@ int input(String ask){
 }
 
 					</code></pre>
+				</li>
+				<li>
+					<h3>Experience</h3>
+					<ul>
+						<li>
+							<p>nous avons commencé par mesurer les côtés du L298N </p>
+							<img src="./images/EX_MT_SIZE.png" style="border-radius: 25px;margin-top: 1rem;">
+						</li>
+						<li>
+							<p>puis la vitesse de rotation des moteurs selon l’intensité qu’ils reçoivent grâce à un tachymètre </p>
+							<img src="./images/EX_MT_SPEED.png" style="border-radius: 25px;margin-top: 1rem;">
+						</li>
+						<li>
+							<h4>conclusion des tests</h4>
+							<ul>
+                                <li>
+                                    <p>d'apres nos mesure, on obtien les grafique suivant :</p>
+                                    <img src="./images/Vitesse (RPM) par rapport à U (V).png" style="border-radius: 25px;margin-top: 1rem;">
+									<img src="./images/U (V) par rapport à PWM.png" style="border-radius: 25px;margin-top: 1rem;">
+                                </li>
+								<li>
+									<p>on peut en deduire : </p>
+									<img src="./images/MT_RESULT.png" style="border-radius: 25px;margin-top: 1rem;">
+								</li>	
+							</ul>
+						</li>
+					</ul>
 				</li>
 			</ul>
         </section>
