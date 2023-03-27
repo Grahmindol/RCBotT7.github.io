@@ -463,6 +463,157 @@ void loop()
 						</li>
 					</ul>
 				</li>
+				<li>
+					<h3>Code</h3>
+					<p>pour une integration plus facile, nous avons écrit une librairie</p>
+					<pre style="border-radius: 10px;" class="line-numbers"><code class="language-cpp">
+//fichier moteur.h
+#ifndef MOTOR_H
+#define MOTOR_H
+
+#include "Arduino.h"
+
+class Motor
+{ // on cree un nouvel obj
+  public: // on metra ici tous les element accecible au public
+    Motor(byte, byte, byte, byte, byte, byte);
+
+    void setVitesseA(int);
+    void setVitesseB(int);
+
+    int getVitesseA();
+    int getVitesseB();
+
+    void setDirectionA(bool);
+    void setDirectionB(bool);
+
+    bool getDirectionA();
+    bool getDirectionB();
+    
+  private: // et ici tous les element accecible uniquement en privé
+    bool directionA = 0, directionB = 0; // pour stoquer les direction
+    
+    int vitesseA = 0,vitesseB = 0; // pour stoquer les vitesse
+    
+    byte ENA = 0, ENB = 0, IN1 = 0, IN2 = 0, IN3 = 0, IN4 = 0; // pour stoquer les pin
+};
+
+#endif
+					</code></pre>
+					<pre style="border-radius: 10px;" class="line-numbers"><code class="language-cpp">
+//fichier moteur.cpp
+#include "Arduino.h"
+#include "Motor.h"
+
+// Pin
+Motor::Motor(byte ena, byte in1, byte in2, byte in3, byte in4, byte enb)
+{
+  ENA = ena;
+  IN1 = in1;
+  IN2 = in2;
+  ENB = enb;
+  IN3 = in3;
+  IN4 = in4;
+            
+  pinMode(ENA,OUTPUT);
+  pinMode(ENB,OUTPUT);
+  pinMode(IN1,OUTPUT);
+  pinMode(IN2,OUTPUT);
+  pinMode(IN3,OUTPUT);
+  pinMode(IN4,OUTPUT);
+
+  digitalWrite(ENA, LOW);
+  digitalWrite(ENB, LOW);
+  
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+//Vitesse moteur A
+void Motor::setVitesseA(int val)
+{
+  vitesseA = val;
+  analogWrite(ENA, vitesseA);
+}
+
+//Vitesse moteur B
+void Motor::setVitesseB(int val)
+{
+  vitesseB = val;
+  analogWrite(ENB, vitesseB);
+}
+
+
+//Vitesse moteur A
+int Motor::getVitesseA()
+{
+  return vitesseA;
+}
+
+//Vitesse moteur B
+int Motor::getVitesseB()
+{
+  return vitesseB;
+}
+
+
+
+// Direction moteur A
+void Motor::setDirectionA(bool val)
+{
+  directionA = val;
+  digitalWrite(IN1, directionA);
+  digitalWrite(IN2, !directionA);
+}
+
+// Direction moteur B
+void Motor::setDirectionB(bool val)
+{
+  directionB = val;
+  digitalWrite(IN3, directionB);
+  digitalWrite(IN4, !directionB);
+}
+
+
+// Direction moteur A
+bool Motor::getDirectionA()
+{
+  return directionA;
+}
+
+// Direction moteur B
+bool Motor::getDirectionB()
+{
+  return directionB;
+}
+					</code></pre>
+					<pre style="border-radius: 10px;" class="line-numbers"><code class="language-cpp">
+//fichier main.ino
+#include "motor.h"
+
+Motor mt(5,6,7,8,9,10);
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  mt.setVitesseA(input("Vitesse A: [0-255] "));
+  mt.setVitesseB(input("Vitesse B: [0-255] "));
+  mt.setDirectionA(input("Direction A: [0-1] ") == 1);
+  mt.setDirectionB(input("Direction B: [0-1] ") == 1);
+}
+
+int input(String ask){
+  Serial.println(ask);
+  while(Serial.available() <= 0){delay(10);}
+  return Serial.readString().toInt();
+}
+
+					</code></pre>
+				</li>
 			</ul>
         </section>
 		<section>
