@@ -85,6 +85,7 @@
 							<p style="margin-top: 2rem;margin-bottom: 1rem;"> on obtient ce tableau : </p>
 							<table >
 								<tr>
+									<th> hauter </th>
 									<th> 10 </th>
 									<th> 9 </th>
 									<th> 8 </th>
@@ -94,22 +95,23 @@
 									<th> 4 </th>
 									<th> 3 </th>
 								</tr>
-								<tr>
-									<th> 982 </th>
-									<th> 900 </th>
-									<th> 910 </th>
-									<th> 920 </th>
-									<th> 927 </th>
-									<th> 900 </th>
-									<th> 870 </th>
-									<th> 810 </th>
-								</tr>
+                                <tr>
+                                    <th> valeur </th>
+                                    <th> 982 </th>
+                                    <th> 900 </th>
+                                    <th> 910 </th>
+                                    <th> 920 </th>
+                                    <th> 927 </th>
+                                    <th> 900 </th>
+                                    <th> 870 </th>
+                                    <th> 810 </th>
+                                </tr>
 							</table>
 							<p style="margin-top: 2rem;margin-bottom: 1rem;"> Grâce à ce tableau, nous pouvons en déduire que la distance optimale entre le capteur et le sol est <b>6mm.</b> </p>
 						</li>
 						<li>
 							<h4>Code utilisé pour les tests</h4>
-							<pre style="border-radius: 10px;"><code class="language-cpp" >
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp" >
 int const capteurIR= A0; // permet de donner un nom à une entrée,
  // ce n’est pas obligatoire mais conseillé
 int ValeurIR=0 ; // crée la variable du capteur
@@ -177,7 +179,7 @@ void loop()
 						</li>
 						<li>
 							<h4>Code utilisé pour les tests</h4>
-							<pre style="border-radius: 10px;"><code class="language-cpp" >
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp" >
 int const trigPin=5; //Trig
 int const echoPin=4; //Echo
 long duree, distance; // variables pour les calculs
@@ -223,20 +225,264 @@ void loop()
 			</ul>
             
         </section>
-		<section>
+        <section>
             <h2>III La carte de puissance</h2>
-            <p>nous utilisons une carte de puissance pour ...</p>
+			<p>Le driver moteur L298N est une carte d’extension compatible à votre Arduino et qui permet aussi bien de piloter deux moteurs à courant continu que de les alimenter électriquement.</p>
+            <ul>
+				<li>
+					<h3>Entrée/Sortie de la carte</h3>
+                    <ul>
+                        <li>
+                            <ul>
+                                <li>
+                                    ENA: Entrée analogique, permet de régler la vitesse du moteur A.
+                                </li>
+                                <li>
+                                    ENB: Entrée analogique, permet de régler la vitesse du moteur B.
+                                </li>
+                                <li>
+                                    IN1: Entrée digitale, permet de régler la direction du moteur A.
+                                </li>
+                                <li>
+                                    IN2: Entrée digitale, permet de régler la direction du moteur A.
+                                </li>
+                                <li>
+                                    IN3: Entrée digitale, permet de régler la direction du moteur B.
+                                </li>
+                                <li>
+                                    IN4: Entrée digitale, permet de régler la direction du moteur B.
+                                </li>
+
+                            </ul>
+                        </li>
+						<li>
+							<h4>Le <abbr title="Modulation de Largeur d'Impulsion"> MLI </abbr></h4>
+							<p>Le MLI (Modulation de Largeur d'Impulsion) est une technique pour réguler la tension ou le courant fourni à une charge électrique en modulant la largeur des impulsions d'un signal de commande en fonction d'une tension de référence.</p>
+							<p>ici, on s'en sert pour commander la vitesse des moteur</p>
+							<p>pour s'en servire il faut appeler la fonction <code class="language-cpp">analogWrite(byte pin,int valeur);</code></p>
+						</li>
+						<li>
+							<h4>Tableau de la polarité des broche de sortie en fonction de l'etat binaire des entré digital </h4>
+							<table>
+								<tr>
+									<th>etat logique de IN1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+									<th>0</th>
+									<th>1</th>
+								</tr>
+								<tr>
+									<th>etat logique de IN2</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+								</tr>
+								<tr>
+									<th>etat logique de IN3</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+								</tr>
+								<tr>
+									<th>etat logique de IN4</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>0</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+									<th>1</th>
+								</tr>
+								<tr>
+									<th>polarité de la borne OUT1</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+									<th>-</th>
+									<th>+</th>
+								</tr>
+								<tr>
+									<th>polarité de la borne OUT2</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+
+								</tr>
+								<tr>
+									<th>polarité de la borne OUT3</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+								</tr>
+								<tr>
+									<th>polarité de la borne OUT4</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>-</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+									<th>+</th>
+								</tr>
+								<tr>
+									<th>sens de rotation du moteur A</th>
+									<th>=</th>
+									<th>></th>
+									<th><</th>
+									<th>=</th>
+									<th>=</th>
+									<th>></th>
+									<th><</th>
+									<th>=</th>
+									<th>=</th>
+									<th>></th>
+									<th><</th>
+									<th>=</th>
+									<th>=</th>
+									<th>></th>
+									<th><</th>
+									<th>=</th>
+								</tr>
+								<tr>
+									<th>sens de rotation du moteur B</th>
+									<th>=</th>
+									<th>=</th>
+									<th>=</th>
+									<th>=</th>
+									<th>></th>
+									<th>></th>
+									<th>></th>
+									<th>></th>
+									<th><</th>
+									<th><</th>
+									<th><</th>
+									<th><</th>
+									<th>=</th>
+									<th>=</th>
+									<th>=</th>
+									<th>=</th>
+								</tr>
+							</table>
+						</li>
+						<li>
+							<h4>cablage</h4>
+							<img src="./images/cablage_l298n.png" style="border-radius: 25px;margin-top: 1rem;">
+						</li>
+					</ul>
+				</li>
+			</ul>
         </section>
 		<section>
 			<h2>IV La Radio-commande</h2>
-			<h2>Le Bleutooth</h2>
-			<p>Le Bluetooth est une technologie de communication sans fil qui utilise des ondes radio pour transmettre des données et des informations entre les appareils. le Bluetooth peut être utilisé pour contrôler et piloter des appareils à distance, tels que des drones ou des voitures télécommandées.</p>
-			<h3>Le module HC-05</h3>
-			<p>Le module HC-05 est un module Bluetooth qui permet de communiquer avec un autre appareil Bluetooth. Il est possible de le connecter à un Arduino pour contrôler un robot ou un drone à distance.</p>
-			<h4>cablage</h4>
-			<img src="./images/cablage_hc-05.png" style="border-radius: 25px;margin-top: 1rem;">
-			<h4>code des tests</h4>
-			<pre style="border-radius: 10px;"><code class="language-cpp">
+			<ul>
+				<li>
+					<h2>Le Bleutooth</h2>
+					<p>Le Bluetooth est une technologie de communication sans fil qui utilise des ondes radio pour transmettre des données et des informations entre les appareils. le Bluetooth peut être utilisé pour contrôler et piloter des appareils à distance, tels que des drones ou des voitures télécommandées.</p>
+				</li>
+				<li>
+					<h3>Le module HC-05</h3>
+					<p>Le module HC-05 est un module Bluetooth qui permet de communiquer avec un autre appareil Bluetooth. Il est possible de le connecter à un Arduino pour contrôler un robot ou un drone à distance.</p>
+					<ul>
+						<li>
+							<h4>cablage</h4>
+							<img src="./images/cablage_hc-05.png" style="border-radius: 25px;margin-top: 1rem;">
+						</li>
+						<li>
+							<h4>code des tests</h4>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
 #include &lt;SoftwareSerial.h&gt;
 
 SoftwareSerial BTserial(2, 3); // RX | TX
@@ -291,19 +537,28 @@ void ecouter(){
     }
   } 
 }
-</code></pre>
-			<h3>L'Application</h3>
-			<p>nous avons réalisé l'app sur Android Studion un environnement de développement intégré (IDE) officiel pour la création d'applications mobiles Android, créé par Google. Il fournit un ensemble d'outils puissants pour les développeurs d'applications Android, tels que des éditeurs de code, des outils de débogage, des émulateurs, des profilers, des outils de test et bien plus encore. </p>
-			<img src="./images/Screenshot_app.png" style="border-radius: 25px;margin-top: 1rem;">
-			<h4>fonctionnalité</h4>
-			<ul>
-				<li>connexion au robot</li>
-				<li>contrôle du robot</li>
-				<li>arrêt/lancement du mode IR</li>
-			</ul>
-			<h4>code</h4>
-			<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
-			<pre style="border-radius: 10px;"><code class="language-java">
+								</code></pre>
+						</li>
+					</ul>
+					
+				</li>
+				<li>
+					<h3>L'Application</h3>
+					<p>nous avons réalisé l'app sur Android Studion un environnement de développement intégré (IDE) officiel pour la création d'applications mobiles Android, créé par Google. Il fournit un ensemble d'outils puissants pour les développeurs d'applications Android, tels que des éditeurs de code, des outils de débogage, des émulateurs, des profilers, des outils de test et bien plus encore. </p>
+					<img src="./images/Screenshot_app.png" style="border-radius: 25px;margin-top: 1rem;">
+					<ul>
+						<li>
+							<h4>fonctionnalité</h4>
+							<ul>
+								<li>connexion au robot</li>
+								<li>contrôle du robot</li>
+								<li>arrêt/lancement du mode IR</li>
+							</ul>
+						</li>
+						<li>
+							<h4>code</h4>
+							<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet de piloter le robot avec le joystick
 final JoystickView joystickRight = findViewById(R.id.joystickView_right);
 joystickRight.setOnMoveListener((angle, strength) -> {
@@ -346,18 +601,26 @@ private int angleToSpeed(int angle){
 		return (angle - 270) * 510 / 90 - 255; //(x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min avec x = angle, in_min = 270 , in_max = 360 , out_min = -255 et out_max = 255 => fonction map de arduino.h
     }
 }
-				</code></pre>
-			<pre style="border-radius: 10px;"><code class="language-java">
+								</code>
+							</pre>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet d'activer ou désactiver le mode de suivie de ligne
 Button button = (Button) findViewById(R.id.button);
 button.setOnClickListener(v -> {
 	if ( bluetoothClient == null ) return;
 	bluetoothClient.writeString( "200000;200000;200000;");// on envoie trois fois la même commande pour être sur que le robot la recoive
 });
-			</code></pre>
-			<h4>Protocole</h4>
-			<p>ce protocole est constitué de packet conposé de 7 octets, le premier octet indique si un bouton est appuyé ou la direction du moteur A, si le premier octet représente la direction du moteur A alors le deuxième et troisième octet représentent la vitesse du moteur A au format hexadécimal tandis que le quatrième indique la direction du moteur B et les cinq et sixième octet représentent la vitesse du moteur B au format hexadécimal. le septième octet est un octet de fin de packet.</p>
-			<img src="./images/protocol.png" style="border-radius: 25px;margin-top: 1rem;">
+								</code>
+							</pre>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<h4>Protocole</h4>
+					<p>ce protocole est constitué de packet conposé de 7 octets, le premier octet indique si un bouton est appuyé ou la direction du moteur A, si le premier octet représente la direction du moteur A alors le deuxième et troisième octet représentent la vitesse du moteur A au format hexadécimal tandis que le quatrième indique la direction du moteur B et les cinq et sixième octet représentent la vitesse du moteur B au format hexadécimal. le septième octet est un octet de fin de packet.</p>
+					<img src="./images/protocol.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+			</ul>
 		</section>
 		<section>
             <h2>V La voiture</h2>

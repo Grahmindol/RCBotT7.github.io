@@ -52,9 +52,14 @@ main {
             color: #ce89ff;
             text-decoration: none;
         }
-		
-		main section table, th, td {
-            border: 1px solid;
+
+        main section table {
+            border-collapse: collapse;
+        }
+
+        main section th, td {
+            border: 3px solid #2d2d2d;
+            padding: 10px;
         }
 
 
