@@ -259,13 +259,13 @@ void loop()
 							<h4>Le <abbr title="Modulation de Largeur d'Impulsion"> MLI </abbr></h4>
 							<p>Le MLI (Modulation de Largeur d'Impulsion) est une technique pour réguler la tension ou le courant fourni à une charge électrique en modulant la largeur des impulsions d'un signal de commande en fonction d'une tension de référence.</p>
 							<p>ici, on s'en sert pour commander la vitesse des moteur</p>
-							<p>pour s'en servire il faut appeler la fonction <code class="language-cpp">analogWrite(byte pin,int valeur);</code></p>
+							<p>pour s'en servir il faut appeler la fonction <code class="language-cpp">analogWrite(byte pin,int valeur);</code></p>
 						</li>
 						<li>
-							<h4>Tableau de la polarité des broche de sortie en fonction de l'etat binaire des entré digital </h4>
+							<h4>Tableau de la polarité des broche de sortie en fonction de l'état binaire des entrées digitales </h4>
 							<table>
 								<tr>
-									<th>etat logique de IN1</th>
+									<th>état logique de IN1</th>
 									<th>0</th>
 									<th>1</th>
 									<th>0</th>
@@ -284,7 +284,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN2</th>
+									<th>état logique de IN2</th>
 									<th>0</th>
 									<th>0</th>
 									<th>1</th>
@@ -303,7 +303,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN3</th>
+									<th>état logique de IN3</th>
 									<th>0</th>
 									<th>0</th>
 									<th>0</th>
@@ -322,7 +322,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN4</th>
+									<th>état logique de IN4</th>
 									<th>0</th>
 									<th>0</th>
 									<th>0</th>
@@ -458,7 +458,7 @@ void loop()
 							</table>
 						</li>
 						<li>
-							<h4>cablage</h4>
+							<h4>câblage</h4>
 							<img src="./images/cablage_l298n.png" style="border-radius: 25px;margin-top: 1rem;">
 						</li>
 					</ul>
@@ -474,8 +474,8 @@ void loop()
 #include "Arduino.h"
 
 class Motor
-{ // on cree un nouvel obj
-  public: // on metra ici tous les element accecible au public
+{ // on crée un nouvel objet
+  public: // on mettra ici tous les éléments accessibilité au public
     Motor(byte, byte, byte, byte, byte, byte);
 
     void setVitesseA(int);
@@ -490,12 +490,12 @@ class Motor
     bool getDirectionA();
     bool getDirectionB();
     
-  private: // et ici tous les element accecible uniquement en privé
-    bool directionA = 0, directionB = 0; // pour stoquer les direction
+  private: // et ici tous les éléments accessibles uniquement en privé
+    bool directionA = 0, directionB = 0; // pour stocker les directions
     
-    int vitesseA = 0,vitesseB = 0; // pour stoquer les vitesse
+    int vitesseA = 0,vitesseB = 0; // pour stocker les vitesses
     
-    byte ENA = 0, ENB = 0, IN1 = 0, IN2 = 0, IN3 = 0, IN4 = 0; // pour stoquer les pin
+    byte ENA = 0, ENB = 0, IN1 = 0, IN2 = 0, IN3 = 0, IN4 = 0; // pour stocker les pin
 };
 
 #endif
@@ -629,15 +629,15 @@ int input(String ask){
 							<h4>conclusion des tests</h4>
 							<ul>
 								<li>
-									<p>la carte à bien pour dimension <b> 44 mm x 44 mm </b>. </p>
+									<p>la carte à bien pour dimensions <b> 44 mm x 44 mm </b>. </p>
 								</li>
                                 <li>
-                                    <p>d'apres nos mesure, on obtien les grafique suivant :</p>
+                                    <p>d'après nos mesures, on obtient les graphiques suivants :</p>
                                     <img src="./images/Vitesse (RPM) par rapport à U (V).png" style="border-radius: 25px;margin-top: 1rem;">
 									<img src="./images/U (V) par rapport à PWM.png" style="border-radius: 25px;margin-top: 1rem;">
                                 </li>
 								<li>
-									<p>on peut en deduire : </p>
+									<p>on peut en déduire : </p>
 									<img src="./images/MT_RESULT.png" style="border-radius: 25px;margin-top: 1rem;">
 								</li>	
 							</ul>
@@ -805,11 +805,11 @@ button.setOnClickListener(v -> {
 		</section>
 		<section>
             <h2>V La voiture</h2>
-            <p> une description du gabarie </P>
+            <p> une description du gabarit </P>
 			<ul>
 				<li>
-					<h3>Positionement des moteur</h3>
-					<p>bla bla bla</p>
+					<h3>Positionement des moteurs</h3>
+					<p>Les moteurs sont placés au centre de la voiture, aux bords gauche et droit.</p>
 					<img src="./images/VT_MT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
@@ -824,18 +824,47 @@ button.setOnClickListener(v -> {
 				</li>
 				<li>
 					<h3>Positionement du QTR-3RC</h3>
-					<p>bla bla bla</p>
+					<p>L'infrarouge est positionné à 6mm du sol à l'aide d'une pièce réglable constituée de deux parties:
+					une fixée au chassis à l'aide de deux vis </p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FIR_1_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+					
+					<p>et une autre contenant l'infrarouge, reliée à la première à l'aide de vis, </p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FIR_0_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+
+					<p>formant un assemblage de longueur variable.<br>
+					Cette configuration permet un réglage facile et une éventuelle correction de la distance
+					de l'infrarouge par rapport au sol si besoin</p>
 					<img src="./images/VT_QTR-3RC_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
 					<h3>Positionement du HC-SR04</h3>
-					<p>bla bla bla</p>
+					<p>Le capteur à ultrasons est fixé avec une pièce de façon à ce qu'il soit placé perpendiculerement au sol, à une hauteur suffisamment petite pour pouvoir détecter les obstacles devant lui.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FUS_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+
 					<img src="./images/VT_HC-SR04_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
 					<h3>Positionement du HC-05</h3>
-					<p>bla bla bla</p>
+					<p>Le HC-05 recevant les signaux Bluetooth, est protégé par un support ouvert sur le dessus. Il est placé à l'arrière de la voiture.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+					
 					<img src="./images/VT_HC-05_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement des piles</h3>
+					<p>Les piles sont positionnées sur le chassis de façon verticale à l'aide d'un support conçu à cet effet. </p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBAT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>
+					
+					<p> Sur celui-ci, nous avons placé les piles verticalement afin d’obtenir un gain 
+					de place pour les autres éléments de la voiture. La face supérieure des piles est placée à l'air
+					libre pour un accès facile aux branchements, pour recharger facilement la pile si besoin.
+					Le support est directement fixé au châssis à l’aide de deux vis.</p>
+					<img src="./images/VT_BAT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 			</ul>
 		</section>
@@ -843,7 +872,7 @@ button.setOnClickListener(v -> {
             <h2>VI Conclusion</h2>
             <ul>
 				<li>
-					<h3>Algorhitme</h3>
+					<h3>Algorithme</h3>
 					<img src="./images/Algo_Complet.png" style="border-radius: 25px;margin-top: 1rem;">
 					<div class="algo start">
 						cc
@@ -856,7 +885,7 @@ button.setOnClickListener(v -> {
 					</code></pre>		
 				</li>
 				<li>
-					<h3>Schema complet</h3>
+					<h3>Schéma complet</h3>
 					<img src="./images/Schema_Complet.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 			</ul>
