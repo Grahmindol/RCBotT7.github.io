@@ -15,7 +15,7 @@
     <main>
         <section>
             <h2>I Le Projet :</h2>
-            <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrason. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
+            <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrasons. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
 			<p>pour se faire nous disposons de :</p>
 			<ul>
 				<li>
@@ -46,7 +46,7 @@
 			</ul>
         </section>
         <section>
-            <h2>II Les Capteur:</h2>
+            <h2>II Les Capteurs:</h2>
             <ul>
 				<li>
 					<h3>capteur à infrarouge</h3>
@@ -77,7 +77,7 @@
 								<img src="./images/EX_IR_SIZE_1.png" style="border-radius: 25px;">
 								<img src="./images/EX_IR_SIZE_2.png" style="border-radius: 25px;">
 							<div>
-							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos resultats concordent bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos résultats concordent bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
 						</li>
 						<li>
 							<p> Nous avons mesuré la distance optimale du capteur avec le sol : </p>
@@ -97,7 +97,7 @@
 								</tr>
                                 <tr>
                                     <th> valeur </th>
-                                    <th> 982 </th>
+                                    <th> 882 </th>
                                     <th> 900 </th>
                                     <th> 910 </th>
                                     <th> 920 </th>
@@ -175,7 +175,7 @@ void loop()
 								<img src="./images/EX_US_ANG_VERTICAL.png" style="border-radius: 25px;">
 							<div>
 							<p>L’angle de détection horizontal est d’environ <b>40 degrés.</b></p>
-							<p>L’angle de détection vertical est d'environ égal à <b>60 degrés.</b></p>
+							<p>L’angle de détection vertical est environ égal à <b>60 degrés.</b></p>
 						</li>
 						<li>
 							<h4>Code utilisé pour les tests</h4>
@@ -212,7 +212,7 @@ void loop()
 						</li>
 						<li>
 							<h4>Conclusion des test:</h4>
-							<p>le capteur à les dimension indiqué sur le doc <b>45 mm × 20 mm × 15 mm</b>, il devra être installé à  <b>la verticale</b> pour un fonctionement optimal.</p>
+							<p>le capteur possède les dimensions indiquées sur le doc <b>45 mm × 20 mm × 15 mm</b>, il devra être installé à  <b>la verticale</b> pour un fonctionement optimal.</p>
 							<p>il peut capter des obstacle situé entre <b>2 cm</b> et <b>4 m</b> sur une plage de <b>40°</b> horizontal et <b>60°</b> vertical.
 							
 						</li>
@@ -465,7 +465,7 @@ void loop()
 				</li>
 				<li>
 					<h3>Code</h3>
-					<p>pour une integration plus facile, nous avons écrit une librairie</p>
+					<p>pour une intégration plus facile, nous avons écrit une librairie</p>
 					<pre style="border-radius: 10px;" class="line-numbers"><code class="language-cpp">
 //fichier moteur.h
 #ifndef MOTOR_H
@@ -689,12 +689,12 @@ void ecouter(){
   String representationSecondNombre = "";
   unsigned long currentMillis = millis();
   char bt = ' ';
-  while (BTserial.available() <= 14) { // on attend d'etre sur d'avoir au moins un message complet.
+  while (BTserial.available() <= 14) { // on attend d'être sûr d'avoir au moins un message complet.
     if((millis() - currentMillis) > 500){ // si on attend plus de 0.5s
       return; // alors on s'arrete
     }
   }
-  while (BTserial.available() > 0) { // tant qu'on a des donné a analiser
+  while (BTserial.available() > 0) { // tant qu'on a des donné à analiser
     char c = BTserial.read(); // on les recupere
     if (c == ';') { // on cherche une fin de transmition
       bt = BTserial.read();                              // ----------------------------------------------------------------------------------------------------------------------------------
@@ -738,7 +738,7 @@ void ecouter(){
 						</li>
 						<li>
 							<h4>code</h4>
-							<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
+							<p>pour des raisons de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
 							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet de piloter le robot avec le joystick
 final JoystickView joystickRight = findViewById(R.id.joystickView_right);
