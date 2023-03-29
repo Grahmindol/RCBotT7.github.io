@@ -805,27 +805,33 @@ button.setOnClickListener(v -> {
 		</section>
 		<section>
             <h2>V La voiture</h2>
-            <p> une description du gabarit </P>
+            <p>Le chassis est une plaque de 3mm d'épaisseur, de 200mm de longueur et de 100mm de largeur.<br>
+			Il s'agit de la pièce qui contient tous les éléments de la voiture.</P>
 			<ul>
 				<li>
 					<h3>Positionement des moteurs</h3>
-					<p>Les moteurs sont placés au centre de la voiture, aux bords gauche et droit.</p>
+					<p>Les moteurs sont placés au centre et un peu vers l'avant de la voiture, aux bords gauche et droit. 
+					Ils sont fixés sous la voiture afin d'obtenir une hauteur assez élevée de celle-ci.</p>
 					<img src="./images/VT_MT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
 					<h3>Positionement du L298n</h3>
-					<p>bla bla bla</p>
+					<p>Le L298N est positionné vers l'avant et au centre de la voiture, juste devant la carte arduino. Elle est fixée au chassis.</p>
 					<img src="./images/VT_L298n_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
 					<h3>Positionement de l'arduino</h3>
-					<p>bla bla bla</p>
+					<p>La carte arduino est aussi positionnée sur le chassis, au centre et vers l'arrière de la voiture, devant le compartiment à piles.</p>
 					<img src="./images/VT_INO_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 				<li>
 					<h3>Positionement du QTR-3RC</h3>
-					<p>L'infrarouge est positionné à 6mm du sol à l'aide d'une pièce réglable constituée de deux parties:
-					une fixée au chassis à l'aide de deux vis </p>
+					<p>Le capteur à infrarouges est positionné à 6mm du sol et à l'avant de la voiture à l'aide d'une pièce réglable constituée de 
+					deux parties:
+					une fixée au chassis à l'aide de deux vis et une autre contenant le capteur, reliée à la première à l'aide de vis,
+					formant un assemblage de longueur variable.<br>
+					Cette configuration permet un réglage facile et une éventuelle correction rapide de la distance
+					de l'infrarouge par rapport au sol si besoin.</p>
 					
 					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FIR_1_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
 					
@@ -840,7 +846,9 @@ button.setOnClickListener(v -> {
 				</li>
 				<li>
 					<h3>Positionement du HC-SR04</h3>
-					<p>Le capteur à ultrasons est fixé avec une pièce de façon à ce qu'il soit placé perpendiculerement au sol, à une hauteur suffisamment petite pour pouvoir détecter les obstacles devant lui.</p>
+					<p>Le capteur à ultrasons HC-SR04 est également fixé à l'avant de la voiture avec une pièce dédié à celui-ci
+					de façon à ce qu'il soit placé parallèle au sol, 
+					à une hauteur suffisamment petite pour pouvoir détecter les obstacles devant lui. </p>
 					
 					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FUS_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
 
@@ -848,7 +856,8 @@ button.setOnClickListener(v -> {
 				</li>
 				<li>
 					<h3>Positionement du HC-05</h3>
-					<p>Le HC-05 recevant les signaux Bluetooth, est protégé par un support ouvert sur le dessus. Il est placé à l'arrière de la voiture.</p>
+					<p>Le HC-05 recevant le Bluetooth est protégé par un support ouvert sur le dessus afin de le rendre facilement manipulable.<br> Il est placé à l'avant de la voiture, 
+					près du capteur à ultrasons.</p>
 					
 					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
 					
@@ -856,14 +865,13 @@ button.setOnClickListener(v -> {
 				</li>
 				<li>
 					<h3>Positionement des piles</h3>
-					<p>Les piles sont positionnées sur le chassis de façon verticale à l'aide d'un support conçu à cet effet. </p>
-					
-					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBAT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>
-					
-					<p> Sur celui-ci, nous avons placé les piles verticalement afin d’obtenir un gain 
+					<p>Les piles sont positionnées sur le chassis de façon verticale à l'aide d'un support conçu
+					à cet effet. <br> Sur celui-ci, nous avons placé les piles verticalement afin d’obtenir un gain 
 					de place pour les autres éléments de la voiture. La face supérieure des piles est placée à l'air
 					libre pour un accès facile aux branchements, pour recharger facilement la pile si besoin.
 					Le support est directement fixé au châssis à l’aide de deux vis.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBAT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>
 					<img src="./images/VT_BAT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
 				</li>
 			</ul>
