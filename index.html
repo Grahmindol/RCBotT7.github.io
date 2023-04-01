@@ -888,8 +888,9 @@ button.setOnClickListener(v -> {
 				</li>
 				<li>
 					<h3>Code</h3>
-					<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
-// le programme complet du robot
+					<ul>
+						<li>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
 // le programme complet du robot
 #include "Motor.h"
 #include &lt;SoftwareSerial.h&gt;
@@ -938,7 +939,7 @@ void loop()
   String representationSecondNombre = "";
   unsigned long currentMillis = millis();
 
-  while (BTserial.available() <= 14)
+  while (BTserial.available() &lt;= 14)
   { // on attend d'être sûr d'avoir au moins un message complet.
     if ((millis() - currentMillis) > 500) { // si on attend plus de 0.5s
       mt.setVitesseA(0);
@@ -947,7 +948,7 @@ void loop()
     }
   }
 
-  while (BTserial.available() > 0)
+  while (BTserial.available() &gt; 0)
   { // tant qu'on a des données à analiser
     char c = BTserial.read(); // on les recupère
 
@@ -964,7 +965,7 @@ void loop()
       int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16); //idem
 
       if (a != '2') {
-        while (BTserial.available() <= 14) { // tant qu'aucun ordre n'est recue :
+        while (BTserial.available() &lt;= 14) { // tant qu'aucun ordre n'est recue :
           if (isOnDarkOn(CENTRE))
           {
             mt.setVitesseB(s);
@@ -990,7 +991,7 @@ void loop()
           digitalWrite(12, wasDarkOnB);
         }
       }
-      else if (getDistance() > 20) //Si la distance est plus grande que 20 cm alors les moteurs sont allumés
+      else if (getDistance() &gt; 20) //Si la distance est plus grande que 20 cm alors les moteurs sont allumés
       {
         premierNombreEstNegatif = a == '1';
         mt.setDirectionA(!premierNombreEstNegatif);
@@ -1027,9 +1028,11 @@ double getDistance()
 }
 
 bool isOnDarkOn(byte n) {
-  return analogRead(IRPins[n]) > IRseuil[n];
+  return analogRead(IRPins[n]) &gt; IRseuil[n];
 }
-					</code></pre>		
+							</code></pre>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<h3>Schéma complet</h3>
