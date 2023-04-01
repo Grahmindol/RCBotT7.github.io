@@ -15,7 +15,7 @@
     <main>
         <section>
             <h2>I Le Projet :</h2>
-            <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrason. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
+            <p>nous avons construit une petite voiture télécommandée par Bluetooth avec suivi de ligne grâce à un capteur de ligne infrarouge et évitement d'obstacles grâce à un télémêtre à ultrasons. Elle peut être contrôlée à distance à partir d'un smartphone via une application.</p>
 			<p>pour se faire nous disposons de :</p>
 			<ul>
 				<li>
@@ -46,7 +46,7 @@
 			</ul>
         </section>
         <section>
-            <h2>II Les Capteur:</h2>
+            <h2>II Les Capteurs:</h2>
             <ul>
 				<li>
 					<h3>capteur à infrarouge</h3>
@@ -77,7 +77,7 @@
 								<img src="./images/EX_IR_SIZE_1.png" style="border-radius: 25px;">
 								<img src="./images/EX_IR_SIZE_2.png" style="border-radius: 25px;">
 							<div>
-							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos resultats concordent bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
+							<p style="margin-top: 2rem;margin-bottom: 1rem;"> nos résultats concordent bien avec la <a href="https://www.pololu.com/product/2457">documentation</a> fournie. </p>
 						</li>
 						<li>
 							<p> Nous avons mesuré la distance optimale du capteur avec le sol : </p>
@@ -97,7 +97,7 @@
 								</tr>
                                 <tr>
                                     <th> valeur </th>
-                                    <th> 982 </th>
+                                    <th> 882 </th>
                                     <th> 900 </th>
                                     <th> 910 </th>
                                     <th> 920 </th>
@@ -175,7 +175,7 @@ void loop()
 								<img src="./images/EX_US_ANG_VERTICAL.png" style="border-radius: 25px;">
 							<div>
 							<p>L’angle de détection horizontal est d’environ <b>40 degrés.</b></p>
-							<p>L’angle de détection vertical est d'environ égal à <b>60 degrés.</b></p>
+							<p>L’angle de détection vertical est environ égal à <b>60 degrés.</b></p>
 						</li>
 						<li>
 							<h4>Code utilisé pour les tests</h4>
@@ -212,7 +212,7 @@ void loop()
 						</li>
 						<li>
 							<h4>Conclusion des test:</h4>
-							<p>le capteur à les dimension indiqué sur le doc <b>45 mm × 20 mm × 15 mm</b>, il devra être installé à  <b>la verticale</b> pour un fonctionement optimal.</p>
+							<p>le capteur possède les dimensions indiquées sur le doc <b>45 mm × 20 mm × 15 mm</b>, il devra être installé à  <b>la verticale</b> pour un fonctionement optimal.</p>
 							<p>il peut capter des obstacle situé entre <b>2 cm</b> et <b>4 m</b> sur une plage de <b>40°</b> horizontal et <b>60°</b> vertical.
 							
 						</li>
@@ -259,13 +259,13 @@ void loop()
 							<h4>Le <abbr title="Modulation de Largeur d'Impulsion"> MLI </abbr></h4>
 							<p>Le MLI (Modulation de Largeur d'Impulsion) est une technique pour réguler la tension ou le courant fourni à une charge électrique en modulant la largeur des impulsions d'un signal de commande en fonction d'une tension de référence.</p>
 							<p>ici, on s'en sert pour commander la vitesse des moteur</p>
-							<p>pour s'en servire il faut appeler la fonction <code class="language-cpp">analogWrite(byte pin,int valeur);</code></p>
+							<p>pour s'en servir il faut appeler la fonction <code class="language-cpp">analogWrite(byte pin,int valeur);</code></p>
 						</li>
 						<li>
-							<h4>Tableau de la polarité des broche de sortie en fonction de l'etat binaire des entré digital </h4>
+							<h4>Tableau de la polarité des broche de sortie en fonction de l'état binaire des entrées digitales </h4>
 							<table>
 								<tr>
-									<th>etat logique de IN1</th>
+									<th>état logique de IN1</th>
 									<th>0</th>
 									<th>1</th>
 									<th>0</th>
@@ -284,7 +284,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN2</th>
+									<th>état logique de IN2</th>
 									<th>0</th>
 									<th>0</th>
 									<th>1</th>
@@ -303,7 +303,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN3</th>
+									<th>état logique de IN3</th>
 									<th>0</th>
 									<th>0</th>
 									<th>0</th>
@@ -322,7 +322,7 @@ void loop()
 									<th>1</th>
 								</tr>
 								<tr>
-									<th>etat logique de IN4</th>
+									<th>état logique de IN4</th>
 									<th>0</th>
 									<th>0</th>
 									<th>0</th>
@@ -458,14 +458,14 @@ void loop()
 							</table>
 						</li>
 						<li>
-							<h4>cablage</h4>
+							<h4>câblage</h4>
 							<img src="./images/cablage_l298n.png" style="border-radius: 25px;margin-top: 1rem;">
 						</li>
 					</ul>
 				</li>
 				<li>
 					<h3>Code</h3>
-					<p>pour une integration plus facile, nous avons écrit une librairie</p>
+					<p>pour une intégration plus facile, nous avons écrit une librairie</p>
 					<pre style="border-radius: 10px;" class="line-numbers"><code class="language-cpp">
 //fichier moteur.h
 #ifndef MOTOR_H
@@ -474,8 +474,8 @@ void loop()
 #include "Arduino.h"
 
 class Motor
-{ // on cree un nouvel obj
-  public: // on metra ici tous les element accecible au public
+{ // on crée un nouvel objet
+  public: // on mettra ici tous les éléments accessibilité au public
     Motor(byte, byte, byte, byte, byte, byte);
 
     void setVitesseA(int);
@@ -490,12 +490,12 @@ class Motor
     bool getDirectionA();
     bool getDirectionB();
     
-  private: // et ici tous les element accecible uniquement en privé
-    bool directionA = 0, directionB = 0; // pour stoquer les direction
+  private: // et ici tous les éléments accessibles uniquement en privé
+    bool directionA = 0, directionB = 0; // pour stocker les directions
     
-    int vitesseA = 0,vitesseB = 0; // pour stoquer les vitesse
+    int vitesseA = 0,vitesseB = 0; // pour stocker les vitesses
     
-    byte ENA = 0, ENB = 0, IN1 = 0, IN2 = 0, IN3 = 0, IN4 = 0; // pour stoquer les pin
+    byte ENA = 0, ENB = 0, IN1 = 0, IN2 = 0, IN3 = 0, IN4 = 0; // pour stocker les pin
 };
 
 #endif
@@ -628,13 +628,16 @@ int input(String ask){
 						<li>
 							<h4>conclusion des tests</h4>
 							<ul>
+								<li>
+									<p>la carte à bien pour dimensions <b> 44 mm x 44 mm </b>. </p>
+								</li>
                                 <li>
-                                    <p>d'apres nos mesure, on obtien les grafique suivant :</p>
+                                    <p>d'après nos mesures, on obtient les graphiques suivants :</p>
                                     <img src="./images/Vitesse (RPM) par rapport à U (V).png" style="border-radius: 25px;margin-top: 1rem;">
 									<img src="./images/U (V) par rapport à PWM.png" style="border-radius: 25px;margin-top: 1rem;">
                                 </li>
 								<li>
-									<p>on peut en deduire : </p>
+									<p>on peut en déduire : </p>
 									<img src="./images/MT_RESULT.png" style="border-radius: 25px;margin-top: 1rem;">
 								</li>	
 							</ul>
@@ -686,12 +689,12 @@ void ecouter(){
   String representationSecondNombre = "";
   unsigned long currentMillis = millis();
   char bt = ' ';
-  while (BTserial.available() <= 14) { // on attend d'etre sur d'avoir au moins un message complet.
+  while (BTserial.available() <= 14) { // on attend d'être sûr d'avoir au moins un message complet.
     if((millis() - currentMillis) > 500){ // si on attend plus de 0.5s
       return; // alors on s'arrete
     }
   }
-  while (BTserial.available() > 0) { // tant qu'on a des donné a analiser
+  while (BTserial.available() > 0) { // tant qu'on a des donné à analiser
     char c = BTserial.read(); // on les recupere
     if (c == ';') { // on cherche une fin de transmition
       bt = BTserial.read();                              // ----------------------------------------------------------------------------------------------------------------------------------
@@ -735,7 +738,7 @@ void ecouter(){
 						</li>
 						<li>
 							<h4>code</h4>
-							<p>pour des raison de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
+							<p>pour des raisons de lisibilité on ne parlera pas de tout le code de l'app ici.</p>
 							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-java">
 //l'extrait qui suit est le code de l'application android qui permet de piloter le robot avec le joystick
 final JoystickView joystickRight = findViewById(R.id.joystickView_right);
@@ -802,11 +805,279 @@ button.setOnClickListener(v -> {
 		</section>
 		<section>
             <h2>V La voiture</h2>
-            
-        </section>
+            <p>Le chassis est une plaque de 3mm d'épaisseur, de 200mm de longueur et de 100mm de largeur.<br>
+			Il s'agit de la pièce qui contient tous les éléments de la voiture.</P>
+			<ul>
+				<li>
+					<h3>Positionement des moteurs</h3>
+					<p>Les moteurs sont placés au centre et un peu vers l'avant de la voiture, aux bords gauche et droit. 
+					Ils sont fixés sous la voiture afin d'obtenir une hauteur assez élevée de celle-ci.</p>
+					<img src="./images/VT_MT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement du L298n</h3>
+					<p>Le L298N est positionné vers l'avant et au centre de la voiture, juste devant la carte arduino. Elle est fixée au chassis.</p>
+					<img src="./images/VT_L298n_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement de l'arduino</h3>
+					<p>La carte arduino est aussi positionnée sur le chassis, au centre et vers l'arrière de la voiture, devant le compartiment à piles.</p>
+					<img src="./images/VT_INO_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement du QTR-3RC</h3>
+					<p>Le capteur à infrarouges est positionné à 6mm du sol et à l'avant de la voiture à l'aide d'une pièce réglable constituée de 
+					deux parties:
+					une fixée au chassis à l'aide de deux vis et une autre contenant le capteur, reliée à la première à l'aide de vis,
+					formant un assemblage de longueur variable.<br>
+					Cette configuration permet un réglage facile et une éventuelle correction rapide de la distance
+					de l'infrarouge par rapport au sol si besoin.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FIR_1_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+					
+					<p>et une autre contenant l'infrarouge, reliée à la première à l'aide de vis, </p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FIR_0_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+
+					<p>formant un assemblage de longueur variable.<br>
+					Cette configuration permet un réglage facile et une éventuelle correction de la distance
+					de l'infrarouge par rapport au sol si besoin</p>
+					<img src="./images/VT_QTR-3RC_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement du HC-SR04</h3>
+					<p>Le capteur à ultrasons HC-SR04 est également fixé à l'avant de la voiture avec une pièce dédié à celui-ci
+					de façon à ce qu'il soit placé parallèle au sol, 
+					à une hauteur suffisamment petite pour pouvoir détecter les obstacles devant lui. </p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FUS_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+
+					<img src="./images/VT_HC-SR04_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement du HC-05</h3>
+					<p>Le HC-05 recevant le Bluetooth est protégé par un support ouvert sur le dessus afin de le rendre facilement manipulable.<br> Il est placé à l'avant de la voiture, 
+					près du capteur à ultrasons.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>					
+					
+					<img src="./images/VT_HC-05_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+				<li>
+					<h3>Positionement des piles</h3>
+					<p>Les piles sont positionnées sur le chassis de façon verticale à l'aide d'un support conçu
+					à cet effet. <br> Sur celui-ci, nous avons placé les piles verticalement afin d’obtenir un gain 
+					de place pour les autres éléments de la voiture. La face supérieure des piles est placée à l'air
+					libre pour un accès facile aux branchements, pour recharger facilement la pile si besoin.
+					Le support est directement fixé au châssis à l’aide de deux vis.</p>
+					
+					<iframe src="https://www.viewstl.com/?embedded&url=https%3A%2F%2Fraw.githubusercontent.com%2FGrahmindol%2FGrahmindol.github.io%2Fd257a6d81b4dd526c86e819c4a31541de5f9478c%2Fobj%2FBAT_STL.STL&color=violet&bgcolor=transparent&noborder=yes&shading=flat&rotation=no" style="border:0;margin:0;width:550px;height:550px;"></iframe>
+					<img src="./images/VT_BAT_POS.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+			</ul>
+		</section>
 		<section>
             <h2>VI Conclusion</h2>
-            
+            <ul>
+				<li>
+					<h3>Algorithme</h3>
+					<img src="./images/Algo_Complet.png" style="border-radius: 25px;margin-top: 1rem;">
+					<div class="algo start">
+						cc
+					</div>
+				</li>
+				<li>
+					<h3>Code</h3>
+					<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
+// le programme complet du robot
+#include "Motor.h"
+#include <SoftwareSerial.h>
+
+Motor mt(5, 6, 7, 8, 9, 10);
+SoftwareSerial BTserial(2, 3); // RX | TX
+
+
+// IR pin
+byte const capteurIRa = A0; //capteur 1
+byte const capteurIRb = A1; //capteur 2
+byte const capteurIRc = A2; //capteur 3
+
+// IR Seuil
+const int seuilCapteurA = 640; //seuil capteur 1
+const int seuilCapteurB = 600; //seuil capteur 2
+const int seuilCapteurC = 600; //seuil capteur 3
+
+// IR ligne
+bool ligneNoirA = false;
+bool ligneNoirB = false;
+bool ligneNoirC = false;
+
+bool IRactif = false;
+
+// US Pin
+const int echoPin = 4;  // Sortie
+const int trigPin = 11; // Entrée
+
+void setup() 
+{
+  Serial.begin(9600); // définit la vitesse de la liaison série
+  BTserial.begin(38400);
+
+  pinMode(trigPin,INPUT);
+  pinMode(echoPin,OUTPUT);
+}
+
+bool detecterLigneNoire(int valeurLue, int seuil) 
+{
+  return valeurLue > seuil;
+}
+
+void loop() 
+{
+  if (IRactif) {
+    for (int i = 0; i < 3; i++) 
+    {
+      int valeurLue = analogRead(i == 0 ? capteurIRa : i == 1 ? capteurIRb : capteurIRc);
+
+      switch (i) 
+      {
+        case 0:
+          ligneNoirA = detecterLigneNoire(valeurLue, seuilCapteurA);
+          //Serial.println("a: " + String(valeurLue));
+          break;
+          
+        case 1:
+          ligneNoirB = detecterLigneNoire(valeurLue, seuilCapteurB);
+          //Serial.println("b: " + String(valeurLue));
+          break;
+          
+        case 2:
+          ligneNoirC = detecterLigneNoire(valeurLue, seuilCapteurC);
+          //Serial.println("c: " + String(valeurLue));
+          break;
+      }
+    }
+    
+    if (ligneNoirB) 
+    {
+      //Serial.println("c'est noir au milieu");
+      mt.setVitesseB(70);
+      mt.setVitesseA(70);
+    } 
+    
+    else if (ligneNoirA) 
+    {
+      //Serial.println("c'est noir a droite");
+      mt.setVitesseB(0);
+      mt.setVitesseA(70);
+      while (analogRead(capteurIRb) < seuilCapteurB) {}
+      mt.setVitesseB(70);
+      mt.setVitesseA(70);
+    } 
+    
+    else if (ligneNoirC) 
+    {
+      //Serial.println("c'est noir a gauche");
+      mt.setVitesseB(70);
+      mt.setVitesseA(0);
+      while (analogRead(capteurIRb) < seuilCapteurB) {}
+      mt.setVitesseB(70);
+      mt.setVitesseA(70);
+    } 
+    
+    else 
+    {
+      mt.setVitesseB(0);
+      mt.setVitesseA(60);
+    }
+  }
+  ecouter();
+}
+
+
+// Bluetooth
+void ecouter() 
+{
+  bool premierNombreEstNegatif = false;
+  bool secondNombreEstNegatif = false;
+  String representationPremierNombre = "";
+  String representationSecondNombre = "";
+  unsigned long currentMillis = millis();
+  
+  while (BTserial.available() <= 14) 
+  { // on attend d'etre sur d'avoir au moins un message complet.
+    if ((millis() - currentMillis) > 500) { // si on attend plus de 0.5s
+      mt.setVitesseA(0);
+      mt.setVitesseB(0);
+      return; // alors on s'arrete
+    }
+  }
+  
+  while (BTserial.available() > 0) 
+  { // tant qu'on a des donné a analiser
+    char c = BTserial.read(); // on les recupere
+    
+    if (c == ';') 
+    { // on cherche une fin de transmition
+      char b = BTserial.read();
+      //premierNombreEstNegatif = BTserial.read() == '1';   // ----------------------------------------------------------------------------------------------------------------------------------
+      representationPremierNombre += (char)BTserial.read();// on lit le message selon la forme X X X X X X ;
+      representationPremierNombre += (char)BTserial.read();//                                  ^  ^  ^  ^  ^
+      secondNombreEstNegatif = BTserial.read() == '1';    //                                  |  |  |  |  |
+      representationSecondNombre += (char)BTserial.read();//                                 (1)(2)(3)(4)(5)
+      representationSecondNombre += (char)BTserial.read();// (1) signe du nb 1 ; (2) valeur absolue de nb 1 ; (3) signe du nb 2 ; (4) valeur absolue de nb 2 ; (5) pour delimité les paket :)
+      // ----------------------------------------------------------------------------------------------------------------------------------
+      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16); //convertion de representation de nombre hexadecimal en nombre
+      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16); //idem
+      
+      if (b == '2') 
+      {
+        IRactif = !IRactif;
+        BTserial.readString(); // clear buffer
+      } 
+      
+      else if (getDistance() > 20) 
+      {
+        premierNombreEstNegatif = b == '1';
+        mt.setDirectionA(!premierNombreEstNegatif );
+        mt.setDirectionB(!secondNombreEstNegatif);
+        mt.setVitesseA(premierNombre);
+        mt.setVitesseB(secondNombre);
+      }
+
+      else
+      {
+        mt.setDirectionA(LOW);
+        mt.setDirectionB(LOW);
+      }
+
+      Serial.println("A:" + String(premierNombre) + " B:" + String(secondNombre) + " D:" + String(getDistance())); // juste pour les log
+      return;
+    }
+  }
+}
+
+double getDistance()
+{ // on declare une fonction nommée "getDistance" qui renvoie un "double" (un nombre à virgule).
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0 pour ne pas émettre d'US.
+  delayMicroseconds(2); // attente de 2ms
+  digitalWrite(trigPin, HIGH); // On met la sortie trigPin à 1 (on envoie un ping de 10 ms).
+  delayMicroseconds(10); //Trig envoie pendant 10ms.
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0.
+
+  // On calcul le temps pour l'aller retour du signal.
+  float duree = pulseIn(echoPin, HIGH,20); //on récupère le temps mis par le signal sonore pour revenir.
+  float distance = duree*340/(2*10000); //on en déduit la distance grâce à la vitesse du son tout en prenant compte du fait qu'il y a un aller retour.
+
+ return distance; // enfin, en revoie la valeur calculée.
+}
+					</code></pre>		
+				</li>
+				<li>
+					<h3>Schéma complet</h3>
+					<img src="./images/Schema_Complet.png" style="border-radius: 25px;margin-top: 1rem;">
+				</li>
+			</ul>
         </section>
     </main>
     <footer>
