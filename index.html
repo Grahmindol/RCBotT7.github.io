@@ -896,76 +896,93 @@ button.setOnClickListener(v -> {
 #include &lt;SoftwareSerial.h&gt;
 
 #define DROITE 0
-#define GAUGHE 2
+#define GAUCHE 2
 #define CENTRE 1
 
-// Pin Moteur
+// Définition des constantes pour les directions des capteurs infrarouges
+#define DARK true
+#define LIGHT false
+
+// Initialisation de l'objet Motor avec les broches de contrôle des moteurs
 Motor mt(5, 6, 7, 8, 9, 10);
+
+// Initialisation de la liaison série pour communiquer avec le module Bluetooth
 SoftwareSerial BTserial(2, 3); // RX | TX
 
-// US Pin
-const int echoPin = 4;  // Sortie
-const int trigPin = 11; // Entrée
+// Broches pour le capteur à ultrasons
+const int echoPin = 4;  // Sortie de l'US
+const int trigPin = 11; // Entrée de l'US
 
-//IR
-bool wasDarkOnA = false;
-bool wasDarkOnB = false;
-
+// Constantes pour les seuils des capteurs infrarouges
 const byte IRPins[] = {A0, A1, A2};
 const int IRseuil[] = {600, 600, 600};
 
+// etat des led de debug durant le suivi de ligne
+bool wasDarkOnA = false;
+bool wasDarkOnB = false;
+
+// Vitesse des moteurs
 int s = 90;
 
+void setup() {
+  // Début de la communication série à une vitesse de 9600 bauds
+  Serial.begin(9600);
 
-
-void setup()
-{
-  Serial.begin(9600); // définit la vitesse de la liaison série
+  // Début de la communication Bluetooth à une vitesse de 38400 bauds
   BTserial.begin(38400);
 
-  pinMode(trigPin, INPUT);
-  pinMode(echoPin, OUTPUT);
+  // Configuration des broches trigPin et echoPin
+  pinMode(trigPin, INPUT);  // trigPin en entrée pour envoyer un signal ultrasonique
+  pinMode(echoPin, OUTPUT); // echoPin en sortie pour recevoir le signal réfléchi
 
-  //DEL pour le debug et un peu le style aussi ;)
+  // Configuration des broches 12 et 13 pour les LED
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
 }
 
 void loop()
 {
-  bool premierNombreEstNegatif = false;
-  bool secondNombreEstNegatif = false;
-  String representationPremierNombre = "";
-  String representationSecondNombre = "";
-  unsigned long currentMillis = millis();
+  // Déclaration des variables
+  bool premierNombreEstNegatif = false; // Indique si le premier nombre est négatif
+  bool secondNombreEstNegatif = false; // Indique si le deuxième nombre est négatif
+  String representationPremierNombre = ""; // Représentation sous forme de chaîne de caractères du premier nombre
+  String representationSecondNombre = ""; // Représentation sous forme de chaîne de caractères du deuxième nombre
+  unsigned long currentMillis = millis(); // Temps écoulé depuis le démarrage du programme en millisecondes
 
+  // On attend d'être sûr d'avoir au moins un message complet.
   while (BTserial.available() &lt;= 14)
-  { // on attend d'être sûr d'avoir au moins un message complet.
-    if ((millis() - currentMillis) > 500) { // si on attend plus de 0.5s
+  {
+    // Si on attend plus de 0.5s, on arrête les moteurs et on sort de la boucle.
+    if ((millis() - currentMillis) &gt; 500) {
       mt.setVitesseA(0);
       mt.setVitesseB(0);
-      return; // alors on s'arrête
+      return;
     }
   }
 
+  // Tant qu'on a des données à analyser
   while (BTserial.available() &gt; 0)
-  { // tant qu'on a des données à analiser
-    char c = BTserial.read(); // on les recupère
+  {
+    // On récupère les données une par une
+    char c = BTserial.read();
 
+    // Si on a trouvé une fin de transmission
     if (c == ';')
-    { // on cherche une fin de transmission
-      char a  = (char)BTserial.read();   // ----------------------------------------------------------------------------------------------------------------------------------
-      representationPremierNombre += (char)BTserial.read();// on lit le message selon la forme X X X X X X ;
-      representationPremierNombre += (char)BTserial.read();//                                  ^  ^  ^  ^  ^
-      secondNombreEstNegatif = BTserial.read() == '1';    //                                  |  |  |  |  |
-      representationSecondNombre += (char)BTserial.read();//                                 (1)(2)(3)(4)(5)
-      representationSecondNombre += (char)BTserial.read();// (1) signe du nb 1 ; (2) valeur absolue de nb 1 ; (3) signe du nb 2 ; (4) valeur absolue de nb 2 ; (5) pour delimiter les paket :)
-      // ----------------------------------------------------------------------------------------------------------------------------------
-      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16); //convertion de représentation du nombre hexadecimal en nombre
-      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16); //idem
+    {
+      char a  = (char)BTserial.read(); // On récupère le caractère qui indique le type de commande
+      representationPremierNombre += (char)BTserial.read(); // On lit le premier nombre en hexadécimal
+      representationPremierNombre += (char)BTserial.read(); // On lit la deuxième partie du premier nombre en hexadécimal
+      secondNombreEstNegatif = BTserial.read() == '1'; // On récupère l'indication de signe du deuxième nombre
+      representationSecondNombre += (char)BTserial.read(); // On lit le deuxième nombre en hexadécimal
+      representationSecondNombre += (char)BTserial.read(); // On lit la deuxième partie du deuxième nombre en hexadécimal
+      // Conversion des nombres en entiers
+      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16);
+      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16);
 
-      if (a != '2') {
-        while (BTserial.available() &lt;= 14) { // tant qu'aucun ordre n'est recue :
+      // Si la commande n'est pas de type '2', on attend un nouvel ordre
+      if (a == '2') {
+        while (BTserial.available() &lt;= 14) {
+          // Si le capteur central est sur une ligne, on avance tout droit
           if (isOnDarkOn(CENTRE))
           {
             mt.setVitesseB(s);
@@ -973,41 +990,45 @@ void loop()
             wasDarkOnA = true;
             wasDarkOnB = true;
           }
-          else if (isOnDarkOn(GAUGHE))
+          // Si le capteur gauche est sur une ligne, on tourne à gauche
+          else if (isOnDarkOn(GAUCHE))
           {
             mt.setVitesseB(s);
             mt.setVitesseA(0);
             wasDarkOnA = true;
             wasDarkOnB = false;
           }
+          // Si le capteur droit est sur une ligne, on tourne à droite
           else if (isOnDarkOn(DROITE))
           {
             mt.setVitesseB(0);
             mt.setVitesseA(s);
-            wasDarkOnA = false;
+            wasDarkOnA = false
             wasDarkOnB = true;
-          }
-          digitalWrite(13, wasDarkOnA);
-          digitalWrite(12, wasDarkOnB);
-        }
-      }
-      else if (getDistance() &gt; 20) //Si la distance est plus grande que 20 cm alors les moteurs sont allumés
+		  }
+		  digitalWrite(13, wasDarkOnA); // On écrit la valeur de wasDarkOnA sur la broche 13
+          digitalWrite(12, wasDarkOnB); // On écrit la valeur de wasDarkOnB sur la broche 12
+		}
+	  }
+	  else if (getDistance() &gt; 20) //Si la distance est plus grande que 20 cm alors les moteurs sont allumés
       {
-        premierNombreEstNegatif = a == '1';
+        premierNombreEstNegatif = a == '1'; // Vérifier si le premier nombre est négatif
+		// Configurer la direction des moteurs en fonction des signes des deux nombres
         mt.setDirectionA(!premierNombreEstNegatif);
         mt.setDirectionB(!secondNombreEstNegatif);
       }
-      else // Sinon coupe les moteurs
+      else
       {
+	    //Si la distance est plus petite que 20 cm alors on recul
         mt.setDirectionA(LOW);
         mt.setDirectionB(LOW);
       }
-
+	  
+	  // Définir les vitesses des moteurs à partir des nombres entrés
       mt.setVitesseA(premierNombre);
-      mt.setVitesseB(secondNombre);
-
-      Serial.println("A:" + String(premierNombre) + " B:" + String(secondNombre) + " D:" + String(getDistance())); // juste pour les log
-      return;
+      mt.setVitesseB(secondNombre); 
+	  
+	  return; //on sort de la boucle.
     }
   }
 }
@@ -1027,8 +1048,9 @@ double getDistance()
   return distance; // enfin, on revoie la valeur calculée.
 }
 
-bool isOnDarkOn(byte n) {
-  return analogRead(IRPins[n]) &gt; IRseuil[n];
+bool isOnDarkOn(byte n) 
+{ // on declare une fonction nommée "isOnDarkOn" qui renvoie un "bool" (un etat binair 0 ou 1).
+  return analogRead(IRPins[n]) &gt; IRseuil[n]; // on renvoie si le capteur selectioné dpasse son seuil
 }
 							</code></pre>
 						</li>
