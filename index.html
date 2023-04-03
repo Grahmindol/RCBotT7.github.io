@@ -969,12 +969,12 @@ void loop()
       representationSecondNombre += (char)BTserial.read(); // On lit le deuxième nombre en hexadécimal
       representationSecondNombre += (char)BTserial.read(); // On lit la deuxième partie du deuxième nombre en hexadécimal
       // Conversion des nombres en entiers
-      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16);
-      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16);
+      int premierNombre = (int) strtol( &#38;representationPremierNombre[0], NULL, 16);
+      int secondNombre = (int) strtol( &#38;representationSecondNombre[0], NULL, 16);
 
-      // Si la commande n'est pas de type '2', on attend un nouvel ordre
+      // Si la commande est de type '2', on se met en mode suivi de ligne
       if (a == '2') {
-        while (BTserial.available() &lt;= 14) {
+        while (BTserial.available() &lt;= 14) { //Tant qu'on a pas de nouvel ordre
           // Si le capteur central est sur une ligne, on avance tout droit
           if (isOnDarkOn(CENTRE))
           {
