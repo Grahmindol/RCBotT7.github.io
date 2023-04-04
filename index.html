@@ -892,6 +892,283 @@ button.setOnClickListener(v -> {
 					<h3>Code</h3>
 					<ul>
 						<li>
+							<p>Tout d'abord, nous avons écrit le programme pour que le robot écoute les ordres de la télécommande :</p>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
+// Inclusion des bibliothèques nécessaires
+#include "Motor.h"
+#include &lt;SoftwareSerial.h&gt;
+
+// Pin Moteur
+// Définition des pins utilisées pour contrôler les moteurs du robot
+Motor mt(5, 6, 7, 8, 9, 10);
+
+// Initialisation d'une connexion série avec un autre appareil via Bluetooth
+SoftwareSerial BTserial(2, 3); // RX | TX
+
+// US Pin
+// Définition des pins utilisées pour le capteur de distance à ultrasons
+const int echoPin = 4;  // Sortie
+const int trigPin = 11; // Entrée
+
+void setup() 
+{
+  // Initialisation des connexions séries
+  Serial.begin(9600); // Définit la vitesse de la liaison série
+  BTserial.begin(38400);
+
+  // Configuration des pins du capteur de distance à ultrasons
+  pinMode(trigPin, INPUT);
+  pinMode(echoPin, OUTPUT);
+}
+
+void loop() 
+{
+  // Variables pour stocker les données de la télécommande
+  bool premierNombreEstNegatif = false;
+  bool secondNombreEstNegatif = false;
+  String representationPremierNombre = "";
+  String representationSecondNombre = "";
+
+  // On mesure le temps depuis le démarrage de la boucle principale
+  unsigned long currentMillis = millis();
+  
+  while (BTserial.available() &lt;= 14) 
+  { 
+    // On attend d'être sûr d'avoir reçu un message complet
+    if ((millis() - currentMillis) &gt; 500) { 
+      // Si on a attendu plus de 0.5s sans recevoir de message, on arrête les moteurs
+      mt.setVitesseA(0);
+      mt.setVitesseB(0);
+      return;
+    }
+  }
+  
+  while (BTserial.available() &gt; 0) 
+  { 
+    // Tant qu'on a des données à analyser
+    char c = BTserial.read(); // On lit le prochain caractère de la communication Bluetooth
+    
+    if (c == ';') 
+    { 
+      // Si on a trouvé le caractère de fin de transmission
+      // On extrait les données de la télécommande
+      premierNombreEstNegatif = BTserial.read() == '1';
+      representationPremierNombre += (char)BTserial.read();
+      representationPremierNombre += (char)BTserial.read();
+      secondNombreEstNegatif = BTserial.read() == '1';
+      representationSecondNombre += (char)BTserial.read();
+      representationSecondNombre += (char)BTserial.read();
+      
+      // On convertit les représentations hexadécimales des nombres en entiers
+      int premierNombre = (int) strtol( &#38;representationPremierNombre[0], NULL, 16);
+      int secondNombre = (int) strtol( &#38;representationSecondNombre[0], NULL, 16);
+      
+      // On vérifie la distance avant de commander les moteurs
+      if (getDistance() &gt; 20) // Si la distance est supérieure à 20 cm, on peut commander les moteurs
+      {
+        mt.setDirectionA(!premierNombreEstNegatif); // On définit la direction des moteurs
+        mt.setDirectionB(!secondNombreEstNegatif);
+      }
+      else // Sinon, on recul
+      {
+        mt.setDirectionA(LOW);
+        mt.setDirectionB(LOW);
+      }
+
+      // On définit les vitesses des moteurs
+      mt.setVitesseA(premierNombre);
+      mt.setVitesseB(secondNombre);
+
+      // On affiche les valeurs des vitesses et la distance pour le suivi des logs
+      Serial.println("A:" + String(premierNombre) + " B:" + String(secondNombre) + " D:" + String(getDistance())); 
+      return;
+    }
+  }
+}
+
+double getDistance()
+{ // on declare une fonction nommée "getDistance" qui renvoie un "double" (un nombre à virgule).
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0 pour ne pas émettre d'US.
+  delayMicroseconds(2); // attente de 2ms
+  digitalWrite(trigPin, HIGH); // On met la sortie trigPin à 1 (on envoie un ping de 10 ms).
+  delayMicroseconds(10); //Trig envoie pendant 10ms.
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0.
+
+  // On calcul le temps pour l'aller retour du signal.
+  float duree = pulseIn(echoPin, HIGH,20); //on récupère le temps mis par le signal sonore pour revenir.
+  float distance = duree*340/(2*10000); //on en déduit la distance grâce à la vitesse du son tout en prenant compte du fait qu'il y a un aller retour.
+
+ return distance; // enfin, on revoie la valeur calculée.
+}
+							</code></pre>
+						</li>
+						<li>
+							<p>Ensuite, nous avons écrit le programme pour que le robot suive une ligne :</p>
+							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
+#include "Motor.h"
+#include &lt;SoftwareSerial.h&gt;
+
+#define DROITE 0
+#define GAUCHE 2
+#define CENTRE 1
+
+// Définition des constantes pour les directions des capteurs infrarouges
+#define DARK true
+#define LIGHT false
+
+// Initialisation de l'objet Motor avec les broches de contrôle des moteurs
+Motor mt(5, 6, 7, 8, 9, 10);
+
+// Initialisation de la liaison série pour communiquer avec le module Bluetooth
+SoftwareSerial BTserial(2, 3); // RX | TX
+
+// Broches pour le capteur à ultrasons
+const int echoPin = 4;  // Sortie de l'US
+const int trigPin = 11; // Entrée de l'US
+
+// Constantes pour les seuils des capteurs infrarouges
+const byte IRPins[] = {A0, A1, A2};
+const int IRseuil[] = {600, 600, 600};
+
+// etat des led de debug durant le suivi de ligne
+bool wasDarkOnA = false;
+bool wasDarkOnB = false;
+
+// Vitesse des moteurs
+int s = 90;
+
+void setup() {
+  // Début de la communication série à une vitesse de 9600 bauds
+  Serial.begin(9600);
+
+  // Début de la communication Bluetooth à une vitesse de 38400 bauds
+  BTserial.begin(38400);
+
+  // Configuration des broches trigPin et echoPin
+  pinMode(trigPin, INPUT);  // trigPin en entrée pour envoyer un signal ultrasonique
+  pinMode(echoPin, OUTPUT); // echoPin en sortie pour recevoir le signal réfléchi
+
+  // Configuration des broches 12 et 13 pour les LED
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+}
+
+void loop()
+{
+  // Déclaration des variables
+  bool premierNombreEstNegatif = false; // Indique si le premier nombre est négatif
+  bool secondNombreEstNegatif = false; // Indique si le deuxième nombre est négatif
+  String representationPremierNombre = ""; // Représentation sous forme de chaîne de caractères du premier nombre
+  String representationSecondNombre = ""; // Représentation sous forme de chaîne de caractères du deuxième nombre
+  unsigned long currentMillis = millis(); // Temps écoulé depuis le démarrage du programme en millisecondes
+
+  // On attend d'être sûr d'avoir au moins un message complet.
+  while (BTserial.available() &lt;= 14)
+  {
+    // Si on attend plus de 0.5s, on arrête les moteurs et on sort de la boucle.
+    if ((millis() - currentMillis) &gt; 500) {
+      mt.setVitesseA(0);
+      mt.setVitesseB(0);
+      return;
+    }
+  }
+
+  // Tant qu'on a des données à analyser
+  while (BTserial.available() &gt; 0)
+  {
+    // On récupère les données une par une
+    char c = BTserial.read();
+
+    // Si on a trouvé une fin de transmission
+    if (c == ';')
+    {
+      char a  = (char)BTserial.read(); // On récupère le caractère qui indique le type de commande
+      representationPremierNombre += (char)BTserial.read(); // On lit le premier nombre en hexadécimal
+      representationPremierNombre += (char)BTserial.read(); // On lit la deuxième partie du premier nombre en hexadécimal
+      secondNombreEstNegatif = BTserial.read() == '1'; // On récupère l'indication de signe du deuxième nombre
+      representationSecondNombre += (char)BTserial.read(); // On lit le deuxième nombre en hexadécimal
+      representationSecondNombre += (char)BTserial.read(); // On lit la deuxième partie du deuxième nombre en hexadécimal
+      // Conversion des nombres en entiers
+      int premierNombre = (int) strtol( &representationPremierNombre[0], NULL, 16);
+      int secondNombre = (int) strtol( &representationSecondNombre[0], NULL, 16);
+
+      // Si la commande n'est pas de type '2', on attend un nouvel ordre
+      if (a == '2') {
+        while (BTserial.available() &lt;= 14) {
+          // Si le capteur central est sur une ligne, on avance tout droit
+          if (isOnDarkOn(CENTRE))
+          {
+            mt.setVitesseB(s);
+            mt.setVitesseA(s);
+            wasDarkOnA = true;
+            wasDarkOnB = true;
+          }
+          // Si le capteur gauche est sur une ligne, on tourne à gauche
+          else if (isOnDarkOn(GAUCHE))
+          {
+            mt.setVitesseB(s);
+            mt.setVitesseA(0);
+            wasDarkOnA = true;
+            wasDarkOnB = false;
+          }
+          // Si le capteur droit est sur une ligne, on tourne à droite
+          else if (isOnDarkOn(DROITE))
+          {
+            mt.setVitesseB(0);
+            mt.setVitesseA(s);
+            wasDarkOnA = false
+            wasDarkOnB = true;
+		  }
+		  digitalWrite(13, wasDarkOnA); // On écrit la valeur de wasDarkOnA sur la broche 13
+          digitalWrite(12, wasDarkOnB); // On écrit la valeur de wasDarkOnB sur la broche 12
+		}
+	  }
+	  else if (getDistance() &gt; 20) //Si la distance est plus grande que 20 cm alors les moteurs sont allumés
+      {
+        premierNombreEstNegatif = a == '1'; // Vérifier si le premier nombre est négatif
+		// Configurer la direction des moteurs en fonction des signes des deux nombres
+        mt.setDirectionA(!premierNombreEstNegatif);
+        mt.setDirectionB(!secondNombreEstNegatif);
+      }
+      else
+      {
+	    //Si la distance est plus petite que 20 cm alors on recul
+        mt.setDirectionA(LOW);
+        mt.setDirectionB(LOW);
+      }
+	  
+	  // Définir les vitesses des moteurs à partir des nombres entrés
+      mt.setVitesseA(premierNombre);
+      mt.setVitesseB(secondNombre); 
+	  
+	  return; //on sort de la boucle.
+    }
+  }
+}
+
+double getDistance()
+{ // on declare une fonction nommée "getDistance" qui renvoie un "double" (un nombre à virgule).
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0 pour ne pas émettre d'US.
+  delayMicroseconds(2); // attente de 2ms
+  digitalWrite(trigPin, HIGH); // On met la sortie trigPin à 1 (on envoie un ping de 10 ms).
+  delayMicroseconds(10); //Trig envoie pendant 10ms.
+  digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0.
+
+  // On calcul le temps pour l'aller retour du signal.
+  float duree = pulseIn(echoPin, HIGH, 20); //on récupère le temps mis par le signal sonore pour revenir.
+  float distance = duree * 340 / (2 * 10000); //on en déduit la distance grâce à la vitesse du son tout en prenant compte du fait qu'il y a un aller retour.
+
+  return distance; // enfin, on revoie la valeur calculée.
+}
+
+bool isOnDarkOn(byte n) 
+{ // on declare une fonction nommée "isOnDarkOn" qui renvoie un "bool" (un etat binair 0 ou 1).
+  return analogRead(IRPins[n]) &gt; IRseuil[n]; // on renvoie si le capteur selectioné dpasse son seuil
+}
+							</code></pre>
+						</li>
+						<li>
+							<p>Enfin, nous avons écrit le programme final permettant de suivre une ligne et d'écouter la télécommande.</p>
 							<pre style="border-radius: 10px;" class ="line-numbers"><code class="language-cpp">
 // le programme complet du robot
 #include "Motor.h"
