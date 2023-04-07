@@ -917,8 +917,8 @@ void setup()
   BTserial.begin(38400);
 
   // Configuration des pins du capteur de distance à ultrasons
-  pinMode(trigPin, INPUT);
-  pinMode(echoPin, OUTPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 }
 
 void loop() 
@@ -997,8 +997,10 @@ double getDistance()
   // On calcul le temps pour l'aller retour du signal.
   float duree = pulseIn(echoPin, HIGH,20); //on récupère le temps mis par le signal sonore pour revenir.
   float distance = duree*340/(2*10000); //on en déduit la distance grâce à la vitesse du son tout en prenant compte du fait qu'il y a un aller retour.
-
- return distance; // enfin, on revoie la valeur calculée.
+  if (distance &lt; 3){
+    return 400;
+  }
+  return distance; // enfin, on revoie la valeur calculée.
 }
 							</code></pre>
 						</li>
@@ -1125,8 +1127,8 @@ void setup() {
   BTserial.begin(38400);
 
   // Configuration des broches trigPin et echoPin
-  pinMode(trigPin, INPUT);  // trigPin en entrée pour envoyer un signal ultrasonique
-  pinMode(echoPin, OUTPUT); // echoPin en sortie pour recevoir le signal réfléchi
+  pinMode(trigPin, OUTPUT );  // trigPin en entrée pour envoyer un signal ultrasonique
+  pinMode(echoPin, INPUT ); // echoPin en sortie pour recevoir le signal réfléchi
 
   // Configuration des broches 12 et 13 pour les LED
   pinMode(12, OUTPUT);
@@ -1235,9 +1237,11 @@ double getDistance()
   digitalWrite(trigPin, LOW); // On met la sortie trigPin à 0.
 
   // On calcul le temps pour l'aller retour du signal.
-  float duree = pulseIn(echoPin, HIGH, 20); //on récupère le temps mis par le signal sonore pour revenir.
+  float duree = pulseIn(echoPin, HIGH); //on récupère le temps mis par le signal sonore pour revenir.
   float distance = duree * 340 / (2 * 10000); //on en déduit la distance grâce à la vitesse du son tout en prenant compte du fait qu'il y a un aller retour.
-
+  if (distance &lt; 3){
+    return 400;
+  }
   return distance; // enfin, on revoie la valeur calculée.
 }
 
